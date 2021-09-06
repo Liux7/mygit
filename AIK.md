@@ -3465,7 +3465,7 @@ png可以透明无背景
 
 # 算法
 
-## 1. 递归
+## 递归
 
 ### 1.1 N苹果放N盘子
 
@@ -3637,17 +3637,13 @@ int main(int argc, char* argv[])
 }
 ```
 
-
-
-## 2. 排序算法
-
-### 2.1 堆排序
+堆排序
 
 底层实现：完全二叉树
 
 [堆排序(heapsort)bilibili链接](https://www.bilibili.com/video/BV1Eb41147dK?from=search&seid=5281747329959496452)
 
-## 3. 二分法
+## 二分法
 
 ``` c++
 #include<iostream>
@@ -3671,7 +3667,7 @@ int main() {
 }
 ```
 
-## 4. 环算法（判断环）
+环算法（判断环）
 
 [leetcode原题](https://leetcode.com/problems/friend-circles/)
 
@@ -3711,9 +3707,7 @@ public:
 };
 ```
 
-## 5. 数学
-
-### 5.1 异或
+数学 异或
 
 1. k 个相同的数的异或和，当 k为奇数时，结果是这个数本身，否则结果是 0。
 2. 任何数与0的异或值是它本身。
@@ -3723,7 +3717,7 @@ public:
 a^b //异或的符号
 ```
 
-### 5.2 负进制
+负进制
 
 ``` c++
 #include<bits/stdc++.h>
@@ -3758,9 +3752,7 @@ int main() {
 }
 ```
 
-### 5.3 组合数
-
-*递推公式：*
+组合数
 
 ![img](D:%5C%E7%A0%81%E5%AD%A6%5CAIK.assets%5Cclip_image002-1611456715294-1611748650900.png)
 
@@ -3790,11 +3782,7 @@ int main() {
 }
 ```
 
-
-
-
-
-### 5.4 高精度
+### 高精度
 
 ``` c++
 //题目描述
@@ -3842,7 +3830,7 @@ int main() {
 }
 ```
 
-### 5.5 前缀和
+前缀和
 
 |            | 定义式                                                       | 递推式                                                       |
 | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -3880,7 +3868,9 @@ int main()
 }
 ```
 
-### 5.6 公因数公倍数
+
+
+公因数公倍数
 
 ``` c++
 int gcd(int a, int b){
@@ -3891,7 +3881,9 @@ int lcm(int a, int b){
 }
 ```
 
-### 5.7 约瑟夫环
+
+
+约瑟夫环
 
 ```c++
 #include<bits/stdc++.h>
@@ -3913,9 +3905,7 @@ int main() {
 
 
 
-## 6. 图论
-
-### 6.1 并查集
+并查集
 
 ``` c++
 #include<bits/stdc++.h>
@@ -3961,7 +3951,7 @@ int main() {
 
 
 
-## 7. BFS
+## BFS
 
 ``` c++
 元素a;
@@ -3979,7 +3969,7 @@ while(!q.empty()){
 }
 ```
 
-## 8. DFS
+## DFS
 
 ``` c++
 dfs(int i){
@@ -4040,9 +4030,7 @@ int main() {
 
 
 
-## 9. dp
-
-最大区间和
+dp 最大区间和
 
 ```c++
 #include<bits/stdc++.h>
@@ -4069,11 +4057,9 @@ int main() {
 }
 ```
 
-### 二进制
+
 
 统计二进制中1的个数
-
-
 
 ```c++
 #include<bits/stdc++.h>
@@ -4119,9 +4105,7 @@ int main() {
 }
 ```
 
-
-
-## 
+ 
 
 连通 岛屿 最短
 
@@ -4687,6 +4671,63 @@ int main() {
 		}
 	}
 	cout << mx << endl;
+
+}
+```
+
+拓扑排序 入度
+
+```c++
+#include<iostream>
+
+#include<vector>
+
+#include<queue>
+
+using namespace std;
+
+int main() {
+
+	int n,m;
+
+	cin >> n  >> m;
+	vector<vector<int> > G(n + 1);
+	vector<int> indegree(n + 1,0);
+	vector<int> ans;
+
+	for (int i = 0; i < m; i++) {
+		int u, v;
+		cin >> u >> v;
+		G[u].push_back(v);
+		indegree[v]++;
+	}
+
+	queue<int> q; //入度为0的点
+
+	for (int i = 1; i <= n; i++) {
+		if (indegree[i] == 0) {
+			q.push(i);
+			
+		}
+	}
+
+	while (!q.empty()) {
+		int now = q.front();
+		q.pop();
+		ans.push_back(now);
+		for (int i = 0; i < G[now].size(); i++) {
+
+			int u = G[now][i];
+			indegree[u]--;
+			if (indegree[u] == 0) {
+				q.push(u);	
+			}
+		}
+	}
+
+	for (int i = 0; i < ans.size(); i++) {
+		cout << ans[i] << " ";
+	}
 
 }
 ```
