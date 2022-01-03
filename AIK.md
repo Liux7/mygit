@@ -1,465 +1,4 @@
-# 数据结构
-
-## STL标准库
-
-### 常用函数
-
-#### qsort快排
-
-``` c++
-qsort(NAME, NUMBLE, SIZE, CMP);//qsort(students, 7, sizeof(student), cmp);
-int cmp(const void a, const void b){
-    Student* pa = (Student*)a;
-    Student* pb = (Student*)b;
-    int num1 = pa->Chinese;
-    int num2 = pb->Chinese;
-    return num2 - num1;
-}
-```
-
-> 在cmp函数中：
->
-> a-b 排序结果：小 - > 大
->
-> b-a 排序结果：大 - > 小
-
-
-
-#### 1.2 lower_bound&upper_bound
-
-**有序！！！**
-
-```c++
-//查找[first, last)区域中第一个大于 val 的元素。
-ForwardIterator upper_bound (ForwardIterator first, ForwardIterator last,
-                             const T& val);
-//查找[first, last)区域中第一个不符合 comp 规则的元素
-ForwardIterator upper_bound (ForwardIterator first, ForwardIterator last,
-                             const T& val, Compare comp);
-```
-
-```c++
-//在 [first, last) 区域内查找不小于 val 的元素
-ForwardIterator lower_bound (ForwardIterator first, ForwardIterator last,
-                             const T& val);
-//在 [first, last) 区域内查找第一个不符合 comp 规则的元素
-ForwardIterator lower_bound (ForwardIterator first, ForwardIterator last,
-                             const T& val, Compare comp);
-```
-
-``` c++
-cmp greater<int> 
-```
-
-
-
-###  map
-
-####  map的储存结构
-
-``` c++
-#include<bits/stdc++.h>
-using namespace std;
-int main (){
-	int n;
-	cin >> n;
-	map<int, int>m;
-	m[6] = 3;
-	m[5] = 8;
-	m[4] = 9;
-	for (auto tmp : m) {
-		cout << tmp.first << " " << tmp.second << endl;
-	}
-	return 0;
-}
-```
-
-> **输出：**
->
-> 4 9
->
-> 5 8
->
-> 6 3
-
-#### 迭代器
-
-``` c++
-string::iterator it
-(typename) 
-    for(auto it=m.begin();it!=m.end();it++)
-	cout<<it->first<<" "<<it->second<<endl;
-for(auto tmp:m){
-	cout<<tmp.first<<" "<<tmp.second<<endl;
-}
-```
-
-#### map中的查找
-
-``` c++
-iter = m.find("123");
-
-if(iter != mapStudent.end())
-       cout<<"Find, the value is"<<iter->second<<endl;
-else
-   cout<<"Do not Find"<<endl;
-```
-
-####  map转vector排序（pair）
-
-``` c++
-//经测试map无法直接排序
-bool cmp(pair<int,int> a,pair<int,int> b){
-    return a.first>b.first;
-}
-int main(){
-    unordered_map<int,int> m;//无序的，哈希结构（底层）
-    m[6]=3;
-    m[5]=8;
-    m[4]=9;
-    vector<pair<int,int>> v(m.begin(),m.end());
-    sort(v.begin(),v.end(),cmp);
-    for(auto tmp:v){
-        cout<<tmp.first<<tmp.second<<endl;
-    }
-    return 0;
-}
-
-```
-
-### string
-
-#### 读入一行
-
-``` c++
-string s;
-getline(cin, s);
-```
-
-
-
-####  读入一个单词
-
-``` c++
-string s;
-cin >> s;
-```
-
-#### 读入一个字母
-
-``` c++
-char s;
-cin >>s;
-```
-
-#### count
-
-``` c++
-#include<bits/stdc++.h>
-using namespace std;
-int main() {
-	string s;
-	int n;
-	getline(cin, s);
-	n = count(s.begin(), s.end(), ' ');
-	cout << n;
-	return 0;
-}
-```
-
-> 输入：
->
-> 121212 12122 2
->
-> 输出：
->
-> 2
-
-#### 3.5 find()
-
-``` c++
-#include<bits/stdc++.h>
-using namespace std;
-int main() {
-	string s;
-	int n;
-	getline(cin, s);
-	int i = s.find('i');
-	cout <<i;
-	return 0;
-}
-```
-
-> 若找不到则返回-1
-
-#### 3.6 统计一个子字符串在另一个字符串中出现的次数
-
-``` c++
-int proc(char* str, char* sub)
-{
-	int n;
-	char* p, * r;
-	n = 0;
-	while (*str){
-		p = str;
-		r = sub;
-		while (*r){
-			if (*p == *r){
-				p++;
-				r++;
-			}
-			else
-				break;
-		}
-		if (*r == '\0') n++;
-		str++;
-	}
-	return n;
-}
-
-```
-
-#### 3.7 数字转字符
-
-``` c++
- string s="1234";
- int i;
- stringstream ss;
- ss<<s;
- ss>>i;
- cout<<i;
-
-ss.str("");
-ss.clear();
-```
-
-***\*atoi函数（将字符串转换成整型数）\****
-
-**atof（将字符串转换成浮点型数）** 
-
-***\*itoa（把一整数转换为字符串 ）\****
-
-` #include<stdlib.h>`
-
-#### 3.8 substr
-
-``` c++
-/**begin是头迭代器，end是尾迭代器*/
-string s="5418340";
-s=s.substr(1,3);//取418,取索引为1，往后截断3个
-s=s.substr(1,-1);//索引为1，截断到最后
-cout<<s;
-```
-
-#### 3.9 大小写
-
-| tolower(c) | 如果c是大写字母，则返回其小写字母形式，否则直接返回c |
-| ---------- | ---------------------------------------------------- |
-| toupper(c) | 如果c是小写字母，则返回其大写字母形式，否则直接返回c |
-
-#### 3.10  strcmp()
-
-(const char *s1,const char * s2)
-
-strcmp(字符串1，字符串2)
-
-当s1<s2时，返回为负数
-
-当s1=s2时，返回值= 0
-
-当s1>s2时，返回正数
-
-#### 3.11 一个字符串按字典序排序
-
-``` c++
-#include<iostream>
-#include<cstring>
-using namespace std;
-
-int cmp(const void* a, const void* b) {
-	return strcmp((const char*)a, (const char*)b);
-}
-
-int main() {
-	char ss[105];
-	int n;
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> ss;
-		qsort(ss, strlen(ss), sizeof(char), cmp);
-		ss[0] = toupper(ss[0]);
-		cout << ss;
-		cout << endl;
-	}
-}
-```
-
-#### 3.12 一组字符串按字典序排序
-
-``` c++
-//my
-#include<iostream>
-#include<cstring>
-using namespace std;
-
-int cmp(const void* a, const void* b) {
-	return strcmp((const char*)a, (const char*)b);
-}
-
-int main() {
-	char ss[105][105];
-	int n;
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> ss[i];
-		for (int j = 0; j < strlen(ss[i]); j++) {
-			
-			ss[i][j] = tolower(ss[i][j]);
-			
-		}
-		ss[i][0] = toupper(ss[i][0]);
-		
-	}
-	qsort(ss, n, sizeof(ss[0]), cmp);
-	for (int i = 0; i < n; i++) {
-		cout << ss[i]<<endl;
-	}
-	return 0;
-}
-```
-
-``` c++
-//lhc's code
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-int n;
-char* ss[105], mm[105][105], * tmp;
-
-int cmp(const void* a, const void* b) {
-    return strcmp(*(const char**)a, *(const char**)b);
-}
-
-void check_s(const char* p) {
-    while (*p) {
-        if (*p == ' ') {
-            puts("YES");
-            return;
-        }
-        ++p;
-    }
-    puts("NO");
-}
-
-int main(int argc, char** argv) {
-    scanf("%d", &n);
-    for (int i = 0; i < n; ++i) {
-        scanf("%s", mm[i]);
-        tmp = mm[i];
-        while (*tmp) {
-            if (*tmp == 'x' || *tmp == 'X') *tmp = ' ';
-            ++tmp;
-        }
-        ss[i] = mm[i];
-    }
-    qsort(ss, n, sizeof(ss[0]), cmp);
-    for (int i = 0; i < n; ++i) {
-        printf("%s", ss[i]);
-        check_s(ss[i]);
-    }
-    return 0;
-}
-```
-
-#### 3.13 反转
-
-```c++
-reverse(str.begin(), str.end());
-```
-
-#### 3.14 进制
-
-```c++
-#include<iostream>
-#include<string>
-#include<sstream>
-using namespace std;
-int main(void)
-{
-	string s="20";
-	int a;
-	stringstream ss;
-	ss<<hex<<s;    //以16进制读入流中
-	ss>>a;        //10进制int型输出
-	cout<<a<<endl;
-        return 0;
-}
-//输出：32
-```
-
-```c++
-#include<cstdio>
-#include<iostream>
-#include<string>
-#include<sstream>
-using namespace std;
-int main(void)
-{
-	string s1,s2;
-	int a=30;
-	stringstream ss;
-	ss<<oct<<a;        //10进制转成八进制读入流中，再以字符串输出
-	ss>>s1;			
-	cout<<s1<<endl;        //输出：36
-	ss.clear();		//不清空可能会出错。
-	ss<<hex<<a;		 //10进制转成十六进制读入流中，，再以字符串输出
-	ss>>s2;			
-	cout<<s2<<endl;        //输出：1e
-    return 0;
-}
-```
-
-
-
-### 4. priority_queue
-
-#### 4.1 定义
-
-``` c++
-//升序队列 top最小
-priority_queue <int,vector<int>,greater<int> > q;
-//降序队列 top最大
-priority_queue <int,vector<int>,less<int> >q;
-```
-
-#### 4.2 pair在priority_queue中
-
-**先比较第一个元素当第一个相等时再比较第二个**
-
-### 5. deque
-
-```c++
-deque<int>	d;
-d.push_back(n);					//从尾部插入元素 
-d.push_front(n);				//从头部插入元素
-d.insert(d.begin()+set,n); 		//在set位置后插入元素n
-
-d.pop_front();					//头部删除元素
-d.pop_back();					//尾部删除元素
-d.erase(d.begin()+set);			//中间删除元素(下表从0开始)
-
-/*清空队列*/
-d.clear();
- 
-/*返回元素个数*/
-d.size();
-
-```
-
-
-
-## 2. 链表
+# 链表
 
 ### 1. 普通链表
 
@@ -504,46 +43,6 @@ void deleteList(list* ls) { /// 释放链表内存
 	free(ls);
 }
 /// 链表数据结构-结束
-```
-
-
-
-------
-
-*以下代码*
-
-*水平有限*
-
-*理解不能*
-
-``` c++
-#include <iostream>
-#include <vector>
-using namespace std;
-int n, m, r, x, y;
-vector<int>* childs[105];
-int main() {
-	cin >> n >> m >> r;
-	for (int i = 1; i <= m; ++i) {
-		cin >> x;
-		if (not childs[x]) childs[x] = new vector<int>;
-		childs[x]->push_back(i);
-	}
-	for (int i = 1; i <= r; ++i) {
-		cin >> x >> y;
-		swap(childs[x], childs[y]);
-	}
-	for (int i = 1; i <= n; ++i) {
-		if (not childs[i]) cout << "0\n";
-		else {
-			cout << childs[i]->size();
-			for (auto& v : *childs[i]) cout << ' ' << v;
-			cout << '\n';
-		}
-		delete childs[i];
-	}
-	return 0;
-}
 ```
 
 ### 2. 类链表
@@ -943,7 +442,7 @@ void LinkedList<T>::clear() //清空链表
 
 
 
-## 3. 树
+# 树
 
 ### 1. 前序中序后序
 
@@ -996,11 +495,55 @@ void preOrderTraverse(BiTree T){//这里传入的T是指针！！！；定义*Bi
 }
 ```
 
-## 4. 线段树
+c++ 实现 模板类 template
 
-[【数据结构】线段树（Segment Tree）](https://www.bilibili.com/video/BV1cb411t7AM?from=search&seid=14253232898459760290)
+```c++
+#include<iostream>
 
-## 5.  图
+using namespace std;
+
+template<class Datatype> class BiNode {
+	Datatype data;
+	struct BiNode* Lchild, * Rchild;
+public:
+	void PreOrder(BiNode<Datatype> *r);
+	void InOrder(BiNode<Datatype>* r);
+	void PostOrder(BiNode<Datatype>* r);
+};
+
+template<class Datatype> void BiNode<Datatype>::PreOrder(BiNode<Datatype> *r) {
+	if (r == NULL) {
+		return;
+	}
+	cout << r->data << " ";
+	PreOrder(r->Lchild);
+	PreOrder(r->Rchild);
+}
+
+template<class Datatype> void BiNode<Datatype>::InOrder(BiNode<Datatype>* r) {
+	if (r == NULL) {
+		return;
+	}
+	InOrder(r->Lchild);
+	cout << r->data << " ";
+	InOrder(r->Rchild);
+}
+
+template<class Datatype> void BiNode<Datatype>::PostOrder(BiNode<Datatype>* r) {
+	if (r == NULL) {
+		return;
+	}
+	PostOrder(r->Lchild);
+	PostOrder(r->Rchild);
+	cout << r->data << " ";
+}
+
+int main(){
+	BiNode<int> tree;
+}
+```
+
+
 
 ### **图的实现：**
 
@@ -1012,154 +555,17 @@ void preOrderTraverse(BiTree T){//这里传入的T是指针！！！；定义*Bi
 vector<vector<int> > G(n+1, vector<int>());
 ```
 
-## 6. 迭代器
-
-- 迭代器是算法和容器的桥梁
-
-- - 迭代器用作访问容器中的元素
-  - 算法不直接操作容器中的数据，而是通过迭代器间接操作
-
-- 算法和容器独立
-
-- - 增加新的算法，无需影响容器的实现
-  - 增加新的容器，原有的算法也能适用
-
-- STL为每个可逆容器都提供了逆向迭代器，逆向迭代器可以通过下面的成员函数得到：
-
-- - rbegin() ：指向容器尾的逆向迭代器
-  - rend()：指向容器首的逆向迭代器
-
-```c++
-//10_2.cpp
-#include <iterator>
-#include <iostream>
-#include <algorithm>
-using namespace std;
-
-//求平方的函数
-double square(double x) {
-    return x * x;
-}
-int main() {
-    //从标准输入读入若干个实数，分别将它们的平方输出
-    transform(istream_iterator<double>(cin), istream_iterator<double>(),
-        ostream_iterator<double>(cout, "\t"), square);
-    cout << endl;
-    return 0;
-}
-```
-
-### 顺序容器的接口（不包含单向链表（forward_list）和数组（array））
-
-- 构造函数
-
-- 赋值函数
-
-- - assign
-
-- 插入函数
-
-- - insert， push*front（只对list和deque）， push*back，emplace，emplace_front
-  - 删除函数
-  - erase，clear，pop*front（只对list和deque） ，pop*back，emplace_back
-
-- 首尾元素的直接访问
-
-- - front，back
-
-- 改变大小
-
-- - resize
-
-```c++
-set<double>::iterator iter1=s.begin();
-copy(s.begin(), s.upper_bound(medium), ostream_iterator<double>(cout, " "));
-map<string, int>::iterator iter = courses.find(name);
-
- for (map<char, int>::iterator iter = s.begin(); iter != s.end(); ++iter)
-        cout << iter->first << " " << iter->second << "  ";
-```
 
 
+# ISK
 
-10. 日期（ctime）
-
-```c++
-#include<iostream>  
-#include <ctime>
- 
-using namespace std;
- 
-int main() {
- 
-	struct tm t1 = { 0 };
-	struct tm t2 = { 0 };
-	double seconds;
- 
-	t1.tm_year = 2016 - 1900; t1.tm_mon = 10; t1.tm_mday = 21;//现在时间2016,11,21
-	t2.tm_year = 2017 - 1900; t2.tm_mon = 5; t2.tm_mday = 7;//高考时间2017,6,7
- 
-	seconds = difftime(mktime(&t2), mktime(&t1));//转换结构体为time_t,利用difftime,计算时间差
- 
-	cout << seconds / 86400 << endl;//最后输出时间,因为一天有86400秒(60*60*24)
-	system("pause");
-	return 0;
-}
-```
-
-```c++
-  struct tm
-
-       {
-
-           int tm_sec;    //秒，[0,59]
-
-           int tm_min；//分钟，[0,59]
-
-           int tm_hour；//小时，[0,23]
-
-           int tm_year；//年，用的时候要加1900
-
-           int tm_mon；//月，用的时候加1，因为范围是[0,11] 
-
-           int tm_mday;  //日，[0,31]
-
-           int tm_wday；//表示星期几，[0,6]
-
-           int tm_isdst； //没用过，也没查过
-
-       }
-```
-
-
-
-```c++
-struct tm *localtime(const time_t *time);
-```
-
-该函数将 time_t 转换为本地时间，本地时间是我们经常使用的
-
-```c++
-time_t mktime(struct tm *time);
-```
-
-该函数用于将日历时间转换为 time_t 格式(自 1970 年 1 月 1 日以来经过的秒数)
-
-
-
-
-
-# 编程环境
-
-## 1. VS环境
-
-### 1.1 忽略报错
+**忽略报错**
 
 ```c++
 #pragma warning(disable:4996)
 ```
 
-### 1.2 文件IO加快debug
+**文件IO加快debug**
 
 ```c++
 freopen("NAME.in", "r", stdin);
@@ -1189,7 +595,9 @@ void write(vector<Acount>& data) {
 
 ```
 
-## 2. 取消cin与stdin同步
+
+
+**取消cin与stdin同步**
 
 ```c++
 std::ios::sync_with_stdio(false);
@@ -1197,7 +605,9 @@ std::ios::sync_with_stdio(false);
 
 这样就可以取消cin于stdin的同步了。
 
-## 3. 多文件结构
+
+
+**多文件结构**
 
 * 一个工程可以划分为多个源文件：
 
@@ -1209,11 +619,15 @@ std::ios::sync_with_stdio(false);
 
 * 利用工程来组合各个文件。
 
-## 4. 生成发布程序
+
+
+**生成发布程序**
 
 > 生成 - > 清理解决方案 - > 将Debug转为release - > 生成解决方案
 
-## 5. main函数的参数
+
+
+**main函数的参数**
 
 将此程序的exe文件与in文件放在一个文件夹下。
 
@@ -1236,7 +650,211 @@ int main(int argc,char* argv[]) {
 }
 ```
 
-## 6. DOS命令
+```c++
+#include<iostream>
+
+using namespace std;
+
+int main(int argc,char** argv){
+    cout << argc <<endl;
+    cout << argv[0] <<endl;
+    cout << argv[1] <<endl;
+    cout << argv[2] <<endl;
+    return 0;
+}
+```
+
+<img src="D:\typora\pic\AIK\image-20211003155206985.png" alt="image-20211003155206985" style="zoom: 33%;" />
+
+
+
+**内联函数**
+
+当某个函数需要多次调用时可以使用内联函数。
+
+<img src="D:\typora\pic\AIK\image-20210912192440836.png" alt="image-20210912192440836" style="zoom:33%;" />
+
+<img src="D:\typora\pic\AIK\image-20210912192448437.png" alt="image-20210912192448437" style="zoom: 33%;" />
+
+在上例中总共调用了10000次sumMatrix（），(1997-5)/10000 = 0.1992 ms
+
+即：一次函数的调用的时间成本大致为0.2ms
+
+
+
+## web前端
+
+## HTML
+
+### HTML框架
+
+<img src="D:\typora\pic\AIK\image-20210606131424291.png" alt="image-20210606131424291" style="zoom: 50%;" />
+
+### 标题
+
+<img src="D:\typora\pic\AIK\image-20210606133035910.png" alt="image-20210606133035910" style="zoom:50%;" />
+
+### 段落（p）
+
+<img src="D:\typora\pic\AIK\image-20210606133107253.png" alt="image-20210606133107253" style="zoom:50%;" />
+
+### 换行（br）
+
+<img src="D:\typora\pic\AIK\image-20210606133146654.png" alt="image-20210606133146654" style="zoom:50%;" />
+
+### 空格（nbsp）
+
+<img src="D:\typora\pic\AIK\image-20210606133205364.png" alt="image-20210606133205364" style="zoom:50%;" />
+
+### 预留格式（pre）
+
+<img src="D:\typora\pic\AIK\image-20210606133234881.png" alt="image-20210606133234881" style="zoom:50%;" />
+
+### 行内组合（span）
+
+<img src="D:\typora\pic\AIK\image-20210606133251479.png" alt="image-20210606133251479" style="zoom:50%;" />
+
+### 水平线（hr）
+
+<img src="D:\typora\pic\AIK\image-20210606133309381.png" alt="image-20210606133309381" style="zoom:50%;" />
+
+### 注释
+
+<img src="D:\typora\pic\AIK\image-20210606133322982.png" alt="image-20210606133322982" style="zoom:50%;" />
+
+### 超链接（a)
+
+<img src="D:\typora\pic\AIK\image-20210606151452415.png" alt="image-20210606151452415" style="zoom:50%;" />
+
+### 图像（img）
+
+<img src="D:\typora\pic\AIK\image-20210606151949511.png" alt="image-20210606151949511" style="zoom:50%;" />
+
+### 无序列表（ul，li）
+
+
+
+<img src="D:\typora\pic\AIK\image-20210606155623836.png" alt="image-20210606155623836" style="zoom:50%;" />
+
+### 有序列表（ol，li）
+
+<img src="D:\typora\pic\AIK\image-20210606155648987.png" alt="image-20210606155648987" style="zoom:50%;" />
+
+### 表格（table，tr，td，th）
+
+<img src="D:\typora\pic\AIK\image-20210606155710079.png" alt="image-20210606155710079" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20210606155734654.png" alt="image-20210606155734654" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20210606155744453.png" alt="image-20210606155744453" style="zoom:50%;" />
+
+### 文本框，密码框（input）
+
+
+
+<img src="D:\typora\pic\AIK\image-20210606163006057.png" alt="image-20210606163006057" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20210606163043782.png" alt="image-20210606163043782" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20210606163105711.png" alt="image-20210606163105711" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20210606163125794.png" alt="image-20210606163125794" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20210606163144190.png" alt="image-20210606163144190" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20210606163205672.png" alt="image-20210606163205672" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20210606163226960.png" alt="image-20210606163226960" style="zoom:50%;" />
+
+## CSS
+
+![image-20210606203310159](D:\typora\pic\AIK\image-20210606203310159.png)
+
+![image-20210606203331328](D:\typora\pic\AIK\image-20210606203331328.png)
+
+![image-20210606203350024](D:\typora\pic\AIK\image-20210606203350024.png)
+
+![image-20210606203402672](D:\typora\pic\AIK\image-20210606203402672.png)
+
+![image-20210606204104010](D:\typora\pic\AIK\image-20210606204104010.png)
+
+![image-20210606204322566](D:\typora\pic\AIK\image-20210606204322566.png)
+
+### 实例
+
+### 8-1 8-2
+
+![image-20210609191221057](D:\typora\pic\AIK\image-20210609191221057.png)
+
+### 8-3
+
+![image-20210611125935610](D:\typora\pic\AIK\image-20210611125935610.png)
+
+## PS
+
+### 自由变换
+
+CTRL + T
+
+### shift
+
+
+
+等比变换
+
+加选区
+
+### alt
+
+减选区
+
+### 复制图层
+
+CTRL + J
+
+alt 拖动
+
+### 抠图
+
+矩形选择工具->拷贝到图层通道
+
+### 快捷填充前景颜色
+
+alt + delete
+
+### 取消选区
+
+ctrl + D
+
+### 空格
+
+使用套索时按空格拖动图
+
+### 半径的大小
+
+alt 右键 左右划
+
+### 放大图像
+
+alt 鼠标滚轮
+
+
+
+jpg有背景
+
+png可以透明无背景
+
+
+
+蒙版，盖住智能对象
+
+剪切蒙版
+
+<img src="D:\typora\pic\AIK\image-20210501195525323.png" alt="P4" style="zoom:33%;" />
+
+# OS
+
+**DOS命令**
 
 常见的dos命令
 
@@ -1250,9 +868,11 @@ int main(int argc,char* argv[]) {
 * c: d:切换盘符
 *  ipconfig 查看本机ip
 
-## 7. Linux命令
 
-### 需要知道的
+
+## Linux
+
+**基础**
 
 * 挂起操作；
 
@@ -1276,7 +896,7 @@ int main(int argc,char* argv[]) {
 
 * 环境变量
 
-### 命令：
+**命令：**
 
 * **ls** = list（只有/即根目录）；
 * **-l** 详细的 -l /home/liux7;
@@ -1316,162 +936,54 @@ int main(int argc,char* argv[]) {
 * chown (change owner) 修改属主
 * chmod +x hello.py 添加权限
 
-###### 
 
-![image-20210303195709028](D:\typora\pic\AIK\image-20210303195709028.png)
 
-## 8.异常处理
+**正则表达式**
 
-```c++
-//12_1.cpp
-#include <iostream>
-using namespace std;
-int divide(int x, int y) {
-    if (y == 0)
-        throw x;
-    return x / y;
-}
-int main() {
-    try {
-        cout << "5 / 2 = " << divide(5, 2) << endl;
-        cout << "8 / 0 = " << divide(8, 0) << endl;
-        cout << "7 / 1 = " << divide(7, 1) << endl;
-    } catch (int e) {
-        cout << e << " is divided by zero!" << endl;
-    }
-    cout << "That is ok." << endl;
-    return 0;
-}
-```
+<img src="D:\typora\pic\AIK\image-20210303195709028.png" alt="image-20210303195709028" style="zoom:50%;" />
 
-### 异常接口声明
 
-- 一个函数显式声明可能抛出的异常，有利于函数的调用者为异常处理做好准备
 
-- 可以在函数的声明中列出这个函数可能抛掷的所有异常类型。
-
-  ```c++
-  例如：void fun() throw(A，B，C，D);
-  ```
-
-- 若无异常接口声明，则此函数可以抛掷任何类型的异常。
-
-- 不抛掷任何类型异常的函数声明如下：
-
-  ```c++
-  void fun() throw();
-  ```
-
-###  带析构语义的类的C++异常处理
+时间 计时 速度
 
 ```c++
-//12_2.cpp
-#include <iostream>
-#include <string>
-using namespace std;
-class MyException {
-public:
-    MyException(const string &message) : message(message) {}
-    ~MyException() {}
-    const string &getMessage() const { return message; }
-private:
-    string message;
-};
-
-class Demo {
-public:
-    Demo() { cout << "Constructor of Demo" << endl; }
-    ~Demo() { cout << "Destructor of Demo" << endl; }
-};
-void func() throw (MyException) {
-    Demo d;
-    cout << "Throw MyException in func()" << endl;
-    throw MyException("exception thrown by func()");
-}
-
-int main() {
-    cout << "In main function" << endl;
-    try {
-        func();
-    } catch (MyException& e) {
-        cout << "Caught an exception: " << e.getMessage() << endl;
-    } 
-    cout << "Resume the execution of main()" << endl;
-    return 0;
-}
-运行结果：
-In main function
-Constructor of Demo
-Throw MyException in func()
-Destructor of Demo
-Caught an exception: exception thrown by func()
-Resume the execution of main()
+#include<time.h>
+clock_t start,end;
+start = clock();
+/*your code*/
+end = clock();
+cout << end - start << "ms"<<endl;
 ```
 
-## 9. 函数申明后加const
+**上传下载到服务器 scp**
 
-```c++
-// test1107.cpp : 定义控制台应用程序的入口点。
-//
-
-#include "stdafx.h"
-#include <iostream>
-using namespace std;
-
-class aa{
-    int num;
-public:
-    aa(){
-        int b =10;
-        num = b;
-    };
-    void out1(){
-        cout<<num<<endl;
-    }
-    void out2() const{
-        cout<<num<<endl;
-    }
-    void out3() const{
-        num+=10; //出错，const函数不能修改其数据成员
-        cout<<num<<endl;
-    }
-
-};
-int _tmain(int argc, _TCHAR* argv[])
-{
-    aa a1;
-    a1.out1();
-    a1.out2();
-    a1.out3();
-    const aa a2;
-    a2.out1(); // 错误，const的成员 不能访问非const的函数
-    a2.out2();
-    a2.out3();
-    return 0;
-}
-```
-
-
+![image-20211116221222737](D:\typora\pic\AIK\image-20211116221222737.png)
 
 # c++
 
-
+## 基础知识
 
 **软件 = 程序 + 文档**
 
-## 2. 简单程序设计
 
-### 2.2 进制
+
+**进制**
 
 > 八进制：0+若干个0~7的数字
 >
 > 十六进制：0x+若干个字符
 
-### 2.3 运算符
+
+
+**运算符**
 
 << 流插入运算符
 
-### 2.4 操纵符
+
+
+**操纵符**
+
+#include<iomanip>
 
 | 操纵符名          | 含义                               |
 | ----------------- | ---------------------------------- |
@@ -1485,7 +997,9 @@ int _tmain(int argc, _TCHAR* argv[])
 | setprecision(int) | 设置浮点数的小数位数（包括小数点） |
 | setw(int)         | 设置域宽                           |
 
-### 2.5 自定义类型
+
+
+**自定义类型**
 
 > using NAME = double;
 >
@@ -1493,7 +1007,9 @@ int _tmain(int argc, _TCHAR* argv[])
 >
 > typedef double NAME;
 
-#### 2.5.1 枚举类型
+
+
+**枚举类型**
 
 > * 定义方式：
 >
@@ -1552,7 +1068,9 @@ int main() {
 }
 ```
 
-#### 2.5.2 auto类型与decltype类型
+
+
+**auto类型与decltype类型**
 
 > * auto：编译器通过初始值自动推断变量的类型
 >
@@ -1566,11 +1084,13 @@ int main() {
 >
 >   例如：decltype(i) j = 2;
 
-### 2.6 静态
 
-**用static申明有静态生存期**
 
-#### 2.6.1 静态数据成员：
+
+
+
+
+**静态数据成员：**
 
 * 用关键字static声明
 
@@ -1630,7 +1150,9 @@ int main() {       //主函数
  Point B: 4, 5  Object count=2
 ```
 
-#### 2.6.2 静态函数成员
+
+
+**静态函数成员**
 
 * **静态成员函数**主要用于处理该类的**静态数据成员**，可以直接调用静态成员函数
 
@@ -1681,7 +1203,9 @@ int main() {
 }
 ```
 
-### 2.7 动态内存分配
+
+
+**动态内存分配**
 
 动态申请内存操作符 new
 
@@ -1697,16 +1221,21 @@ new 类型名T [数组长度]
 
 delete[] 数组名
 
-### 2.8 重载运算符
+
+
+**重载运算符**
 
 运算符重载是对已有的运算符赋予多重含义，使同一个运算符作用于不同类型的数据时导致不同的行为。C++ 几乎可以重载全部的运算符，而且只能够重载C++中已经有的。不能重载的运算符：“.”、“.*”、“::”、“?:”
 
-#### 重载为类的非静态成员函数；
 
-**双目运算符：**
 
-- 如果要重载 B 为类成员函数，使之能够实现表达式 *oprd1 B oprd2*，其中 oprd1 为A 类对象，则 B 应被重载为 A 类的成员函数，形参类型应该是 oprd2 所属的类型。
-- 经重载后，表达式 oprd1 B oprd2 相当于 oprd1.operator B(oprd2)
+**重载为类的非静态成员函数**
+
+* **双目运算符：**
+
+如果要重载 B 为类成员函数，使之能够实现表达式 *oprd1 B oprd2*，其中 oprd1 为A 类对象，则 B 应被重载为 A 类的成员函数，形参类型应该是 oprd2 所属的类型。
+
+经重载后，表达式 oprd1 B oprd2 相当于 oprd1.operator B(oprd2)
 
 ```c++
 #include <iostream>
@@ -1750,10 +1279,11 @@ int main() {
 }
 ```
 
-**单目运算符：**
+* **单目运算符：**
 
-- 如果要重载 U 为类成员函数，使之能够实现表达式 U oprd，其中 oprd 为A类对象，则 U 应被重载为 A 类的成员函数，无形参。
-- 经重载后，表达式 U oprd 相当于 oprd.operator U()
+如果要重载 U 为类成员函数，使之能够实现表达式 U oprd，其中 oprd 为A类对象，则 U 应被重载为 A 类的成员函数，无形参。
+
+经重载后，表达式 U oprd 相当于 oprd.operator U()
 
 ```c++
 #include <iostream>
@@ -1816,7 +1346,7 @@ int main() {
 
 
 
-#### 重载为非成员函数：
+**重载为非成员函数：**
 
 有些运算符不能重载为成员函数，例如二元运算符的左操作数不是对象，或者是不
 能由我们重载运算符的对象
@@ -1838,8 +1368,6 @@ int main() {
 表达式 oprd B
 
 等同于operator B(oprd,0 )
-
-
 
 
 
@@ -1944,7 +1472,7 @@ int main()
 
 
 
-### 2.9 保留小数
+**保留小数**
 
 - 如果不指定fixed或scientific，精度值表示有效数字位数。
 - 如果设置了ios*base::fixed或ios*base::scientific精度值表示小数点之后的位数。
@@ -1961,7 +1489,9 @@ cout <<fixed<< setprecision(6) << i;
 
 3.科学表示格式：scientific与setprecision(n)配合，表示小数精确度n位
 
-#### **控制输出精度——指定fixed**
+
+
+**控制输出精度——指定fixed**
 
 ```c++
 cout << setiosflags(ios_base::fixed);   
@@ -1978,7 +1508,9 @@ Al         653.7
 Stan      4358.2
 ```
 
-#### 控制输出精度——指定scientific
+
+
+**控制输出精度——指定scientific**
 
 ```c++
 cout << setiosflags(ios_base::scientific);
@@ -1995,7 +1527,7 @@ Al      6.5e+002
 Stan    4.4e+003
 ```
 
-### 2.10  基于范围的for循环
+**2.10  基于范围的for循环**
 
 ``` c++
 int main()
@@ -2012,25 +1544,25 @@ return 0;
 
 
 
-### 2.11 流类库
+**2.11 流类库**
 
 - 当程序与外界环境进行信息交换时，存在着两个对象：程序中的对象、文件对象。 流，一种抽象，负责在数据的生产者和数据的消费者之间建立联系，并管理数据的流动。
 
 
 
-#### 最重要的三个输出流
+**最重要的三个输出流**
 
 - ostream
 - ofstream
 - ostringstream
 
-#### 预先定义的输出流对象
+**预先定义的输出流对象**
 
 - cout 标准输出
 - cerr 标准错误输出，没有缓冲，发送给它的内容立即被输出。
 - clog 类似于cerr，但是有缓冲，缓冲区满时被输出。
 
-#### 构造输出流对象
+**构造输出流对象**
 
 - ofstream类支持磁盘文件输出
 
@@ -2053,7 +1585,7 @@ return 0;
   ofstream myFile("filename", ios_base::out | ios_base::binary);
   ```
 
-#### 文件输出流成员函数
+**文件输出流成员函数**
 
 - open函数
 
@@ -2080,7 +1612,7 @@ return 0;
 
 在写到一个流时进行错误处理
 
-#### 设置对齐方式
+**设置对齐方式**
 
 ```
 //11_3.cpp
@@ -2106,7 +1638,7 @@ Al         653.7
 Stan     4358.24
 ```
 
-#### setiosflags的参数（流的格式标识）
+**setiosflags的参数（流的格式标识）**
 
 - ios_base::skipws 在输入中跳过空白 。
 - ios_base::left 左对齐值，用填充字符填充右边。
@@ -2123,14 +1655,14 @@ Stan     4358.24
 - ios_base::fixed 以定点格式显示浮点数值（没有指数部分） 。
 - ios_base::unitbuf 在每次插入之后转储并清除缓冲区内容。
 
-## 3. 函数
+## 函数
 
-### 3.1 可变参数
+3.1 可变参数
 
 > - 如果所有的实参类型相同，可以传递一个名为initializer_list的标准库类型；
 > - 如果实参的类型不同，我们可以编写可变参数的模板（第9章）。
 
-### 3.2 内联函数
+3.2 内联函数
 
 * 声明时使用关键字 inline。
 
@@ -2159,7 +1691,7 @@ int main() {
 }
 ```
 
-### 3.3 constexpr函数
+3.3 constexpr函数
 
 > * constexpr修饰的函数在其所有参数都是constexpr时，一定返回constexpr；
 >
@@ -2171,7 +1703,7 @@ int main() {
 >
 > * constexpr int foo = get_size();  //正确：foo是一个常量表达式
 
-### 3.4 默认参数值的函数
+3.4 默认参数值的函数
 
 > **默认参数值:**可以预先设置默认的参数值，调用时如给出实参，则采用实参值，否则采用预先设置的默认参数值。
 
@@ -2189,7 +1721,7 @@ int add(int x = 1, int y, int z = 6);//错误
 >
 > 如果一个函数有原型声明，且原型声明在定义之前，则默认参数值应在函数原型声明中给出；如果只有函数的定义，或函数定义在前，则默认参数值可以函数定义中给出。
 
-### 3.5 函数重载
+3.5 函数重载
 
 > C++允许功能相近的函数在相同的作用域内以相同函数名声明，从而形成重载。方便使用，便于记忆。
 >
@@ -2228,7 +1760,7 @@ int main() {
 
 
 
-### 3.7 指针函数和函数指针
+3.7 指针函数和函数指针
 
 **指针函数**：避免将局部指针作为返回值。
 
@@ -2252,7 +1784,7 @@ int max(int a, int b) // 求最大值
 { return ((a > b) ? a: b);}
 ```
 
-### 3.8  对象指针
+3.8  对象指针
 
 对象指针定义形式
 
@@ -2270,7 +1802,7 @@ int max(int a, int b) // 求最大值
 
 例：**ptr->getx()** 相当于 **(*ptr).getx();**
 
-### 3.9 函数模板和类模板
+3.9 函数模板和类模板
 
 语法形式：
 
@@ -2386,17 +1918,42 @@ int main() {
 }
 ```
 
-### 3.10 函数适配器
+3.10 函数适配器
 
 
 
-## 4. 类与对象
+随机函数
 
-### 1.4 面向对象的基本概念
+```c++
+#include <iostream>
+ 
+#include <cstdlib> // 标准库
+ 
+#include <ctime>
+ 
+using namespace std;
+ 
+ 
+int main(int argc, const char * argv[]) {
+ 
+    srand((unsigned)time(NULL));
+ 
+    cout << rand() << endl;
+ 
+    return 0;
+ 
+}
+```
+
+
+
+## 类与对象
+
+1.4 面向对象的基本概念
 
 > *类与对象*的关系好比*类型与实例*的关系
 
-### 4.1 类定义的语法形式
+4.1 类定义的语法形式
 
 > class 类名称
 >
@@ -2430,13 +1987,13 @@ int main() {
 >
 >   与private类似，其差别表现在继承与派生时对派生类的影响不同，详见第七章。
 
-### 4.2 对象定义的语法
+4.2 对象定义的语法
 
 >  类名 对象名；
 >
 >  例：Clock myClock
 
-### 4.3 类成员的访问权限
+4.3 类成员的访问权限
 
 > * 类中成员互相访问
 >
@@ -2446,7 +2003,7 @@ int main() {
 >
 >   使用“对象名.成员名”方式访问 public 属性的成员
 
-### 4.4 联合体
+4.4 联合体
 
 ``` c++
 #include <iostream>
@@ -2498,7 +2055,7 @@ int main() {
 > Calculus: PASS
 > C++ Programming: 85
 
-### 4.5 枚举类
+4.5 枚举类
 
 > 语法：
 >
@@ -2518,7 +2075,7 @@ int main()
 }
 ```
 
-### 4.6 继承和派生
+4.6 继承和派生
 
 继承的基本概念和语法
 
@@ -2603,7 +2160,7 @@ Derived ();
 
 ```
 
-#### 继承的构造函数
+继承的构造函数
 
 ```c++
 #include<bits/stdc++.h>
@@ -2631,14 +2188,14 @@ int main() {
 
 
 
-### 4.7 虚基类
+4.7 虚基类
 
 - 虚基类声明
 
 - - 以virtual说明基类继承方式
   - 例：class B1:virtual public B
 
-### 4.8 抽象类
+4.8 抽象类
 
 - 带有纯虚函数的类称为抽象类:
 
@@ -2693,7 +2250,7 @@ int main() {
 }
 ```
 
-### 4.9 override
+4.9 override
 
 - 多态行为的基础：基类声明虚函数，继承类声明一个函数覆盖该虚函数
 - 覆盖要求： 函数签名（signatture）完全一致
@@ -2703,7 +2260,7 @@ int main() {
 
 -　C++11 引入显式函数覆盖，在编译期而非运行期捕获此类错误。 - 在虚函数显式重载中运用，编译器会检查基类是否存在一虚拟函数，与派生类中带有声明override的虚拟函数，有相同的函数签名（signature）；若不存在，则会回报错误。
 
-### 4.10 final
+4.10 final
 
 - C++11提供的final，用来避免类被继承，或是基类的函数被改写 例： struct Base1 final { };
 
@@ -2713,9 +2270,7 @@ int main() {
 
   struct Derived2 : Base2 { void f(); // 编译错误：Base2::f 为final，不允许被覆盖 };
 
-## 5. 类与函数
-
-### 5.1 类的成员函数
+5.1 类的成员函数
 
 > * 在类中说明函数原型；
 >
@@ -3293,181 +2848,722 @@ int main() {
 
 
 
-# web前端
+**异常处理**
+
+```c++
+//12_1.cpp
+#include <iostream>
+using namespace std;
+int divide(int x, int y) {
+    if (y == 0)
+        throw x;
+    return x / y;
+}
+int main() {
+    try {
+        cout << "5 / 2 = " << divide(5, 2) << endl;
+        cout << "8 / 0 = " << divide(8, 0) << endl;
+        cout << "7 / 1 = " << divide(7, 1) << endl;
+    } catch (int e) {
+        cout << e << " is divided by zero!" << endl;
+    }
+    cout << "That is ok." << endl;
+    return 0;
+}
+```
+
+### 异常接口声明
+
+- 一个函数显式声明可能抛出的异常，有利于函数的调用者为异常处理做好准备
+
+- 可以在函数的声明中列出这个函数可能抛掷的所有异常类型。
+
+  ```c++
+  例如：void fun() throw(A，B，C，D);
+  ```
+
+- 若无异常接口声明，则此函数可以抛掷任何类型的异常。
+
+- 不抛掷任何类型异常的函数声明如下：
+
+  ```c++
+  void fun() throw();
+  ```
+
+###  带析构语义的类的C++异常处理
+
+```c++
+//12_2.cpp
+#include <iostream>
+#include <string>
+using namespace std;
+class MyException {
+public:
+    MyException(const string &message) : message(message) {}
+    ~MyException() {}
+    const string &getMessage() const { return message; }
+private:
+    string message;
+};
+
+class Demo {
+public:
+    Demo() { cout << "Constructor of Demo" << endl; }
+    ~Demo() { cout << "Destructor of Demo" << endl; }
+};
+void func() throw (MyException) {
+    Demo d;
+    cout << "Throw MyException in func()" << endl;
+    throw MyException("exception thrown by func()");
+}
+
+int main() {
+    cout << "In main function" << endl;
+    try {
+        func();
+    } catch (MyException& e) {
+        cout << "Caught an exception: " << e.getMessage() << endl;
+    } 
+    cout << "Resume the execution of main()" << endl;
+    return 0;
+}
+运行结果：
+In main function
+Constructor of Demo
+Throw MyException in func()
+Destructor of Demo
+Caught an exception: exception thrown by func()
+Resume the execution of main()
+```
+
+9. 函数申明后加const
+
+```c++
+// test1107.cpp : 定义控制台应用程序的入口点。
+//
+
+#include "stdafx.h"
+#include <iostream>
+using namespace std;
+
+class aa{
+    int num;
+public:
+    aa(){
+        int b =10;
+        num = b;
+    };
+    void out1(){
+        cout<<num<<endl;
+    }
+    void out2() const{
+        cout<<num<<endl;
+    }
+    void out3() const{
+        num+=10; //出错，const函数不能修改其数据成员
+        cout<<num<<endl;
+    }
 
-## HTML
+};
+int _tmain(int argc, _TCHAR* argv[])
+{
+    aa a1;
+    a1.out1();
+    a1.out2();
+    a1.out3();
+    const aa a2;
+    a2.out1(); // 错误，const的成员 不能访问非const的函数
+    a2.out2();
+    a2.out3();
+    return 0;
+}
+```
 
-### HTML框架
 
-<img src="D:\typora\pic\AIK\image-20210606131424291.png" alt="image-20210606131424291" style="zoom: 50%;" />
 
-### 标题
+# STL
 
-<img src="D:\typora\pic\AIK\image-20210606133035910.png" alt="image-20210606133035910" style="zoom:50%;" />
+### 迭代器
 
-### 段落（p）
+- 迭代器是算法和容器的桥梁
 
-<img src="D:\typora\pic\AIK\image-20210606133107253.png" alt="image-20210606133107253" style="zoom:50%;" />
+- - 迭代器用作访问容器中的元素
+  - 算法不直接操作容器中的数据，而是通过迭代器间接操作
 
-### 换行（br）
+- 算法和容器独立
 
-<img src="D:\typora\pic\AIK\image-20210606133146654.png" alt="image-20210606133146654" style="zoom:50%;" />
+- - 增加新的算法，无需影响容器的实现
+  - 增加新的容器，原有的算法也能适用
 
-### 空格（nbsp）
+- STL为每个可逆容器都提供了逆向迭代器，逆向迭代器可以通过下面的成员函数得到：
 
-<img src="D:\typora\pic\AIK\image-20210606133205364.png" alt="image-20210606133205364" style="zoom:50%;" />
+- - rbegin() ：指向容器尾的逆向迭代器
+  - rend()：指向容器首的逆向迭代器
 
-### 预留格式（pre）
+顺序容器的接口（不包含单向链表（forward_list）和数组（array））
 
-<img src="D:\typora\pic\AIK\image-20210606133234881.png" alt="image-20210606133234881" style="zoom:50%;" />
+- 构造函数
 
-### 行内组合（span）
+- 赋值函数
 
-<img src="D:\typora\pic\AIK\image-20210606133251479.png" alt="image-20210606133251479" style="zoom:50%;" />
+- - assign
 
-### 水平线（hr）
+- 插入函数
 
-<img src="D:\typora\pic\AIK\image-20210606133309381.png" alt="image-20210606133309381" style="zoom:50%;" />
+- - insert， push*front（只对list和deque）， push*back，emplace，emplace_front
+  - 删除函数
+  - erase，clear，pop*front（只对list和deque） ，pop*back，emplace_back
 
-### 注释
+- 首尾元素的直接访问
 
-<img src="D:\typora\pic\AIK\image-20210606133322982.png" alt="image-20210606133322982" style="zoom:50%;" />
+- - front，back
 
-### 超链接（a)
+- 改变大小
 
-<img src="D:\typora\pic\AIK\image-20210606151452415.png" alt="image-20210606151452415" style="zoom:50%;" />
+- - resize
 
-### 图像（img）
+```c++
+set<double>::iterator iter1=s.begin();
+copy(s.begin(), s.upper_bound(medium), ostream_iterator<double>(cout, " "));
+map<string, int>::iterator iter = courses.find(name);
 
-<img src="D:\typora\pic\AIK\image-20210606151949511.png" alt="image-20210606151949511" style="zoom:50%;" />
+ for (map<char, int>::iterator iter = s.begin(); iter != s.end(); ++iter)
+        cout << iter->first << " " << iter->second << "  ";
+```
 
-### 无序列表（ul，li）
 
 
+### qsort
 
-<img src="D:\typora\pic\AIK\image-20210606155623836.png" alt="image-20210606155623836" style="zoom:50%;" />
+``` c++
+qsort(NAME, NUMBLE, SIZE, CMP);//qsort(students, 7, sizeof(student), cmp);
+int cmp(const void a, const void b){
+    Student* pa = (Student*)a;
+    Student* pb = (Student*)b;
+    int num1 = pa->Chinese;
+    int num2 = pb->Chinese;
+    return num2 - num1;
+}
+```
 
-### 有序列表（ol，li）
+> 在cmp函数中：
+>
+> a-b 排序结果：小 - > 大
+>
+> b-a 排序结果：大 - > 小
+
+
+
+#### lower_bound&upper_bound
+
+**有序！！！**
+
+```c++
+//查找[first, last)区域中第一个大于 val 的元素。
+ForwardIterator upper_bound (ForwardIterator first, ForwardIterator last,
+                             const T& val);
+//查找[first, last)区域中第一个不符合 comp 规则的元素
+ForwardIterator upper_bound (ForwardIterator first, ForwardIterator last,
+                             const T& val, Compare comp);
+```
+
+```c++
+//在 [first, last) 区域内查找不小于 val 的元素
+ForwardIterator lower_bound (ForwardIterator first, ForwardIterator last,
+                             const T& val);
+//在 [first, last) 区域内查找第一个不符合 comp 规则的元素
+ForwardIterator lower_bound (ForwardIterator first, ForwardIterator last,
+                             const T& val, Compare comp);
+```
 
-<img src="D:\typora\pic\AIK\image-20210606155648987.png" alt="image-20210606155648987" style="zoom:50%;" />
+``` c++
+cmp greater<int> 
+```
 
-### 表格（table，tr，td，th）
 
-<img src="D:\typora\pic\AIK\image-20210606155710079.png" alt="image-20210606155710079" style="zoom:50%;" />
 
-<img src="D:\typora\pic\AIK\image-20210606155734654.png" alt="image-20210606155734654" style="zoom:50%;" />
+###  map
 
-<img src="D:\typora\pic\AIK\image-20210606155744453.png" alt="image-20210606155744453" style="zoom:50%;" />
+####  map的储存结构
 
-### 文本框，密码框（input）
+``` c++
+#include<bits/stdc++.h>
+using namespace std;
+int main (){
+	int n;
+	cin >> n;
+	map<int, int>m;
+	m[6] = 3;
+	m[5] = 8;
+	m[4] = 9;
+	for (auto tmp : m) {
+		cout << tmp.first << " " << tmp.second << endl;
+	}
+	return 0;
+}
+```
+
+> **输出：**
+>
+> 4 9
+>
+> 5 8
+>
+> 6 3
+
+
+
+#### 迭代器
+
+``` c++
+string::iterator it
+(typename) 
+    for(auto it=m.begin();it!=m.end();it++)
+	cout<<it->first<<" "<<it->second<<endl;
+for(auto tmp:m){
+	cout<<tmp.first<<" "<<tmp.second<<endl;
+}
+```
+
+#### map中的查找
+
+``` c++
+iter = m.find("123");
+
+if(iter != mapStudent.end())
+       cout<<"Find, the value is"<<iter->second<<endl;
+else
+   cout<<"Do not Find"<<endl;
+```
+
+####  map转vector排序（pair）
+
+``` c++
+//经测试map无法直接排序
+bool cmp(pair<int,int> a,pair<int,int> b){
+    return a.first>b.first;
+}
+int main(){
+    unordered_map<int,int> m;//无序的，哈希结构（底层）
+    m[6]=3;
+    m[5]=8;
+    m[4]=9;
+    vector<pair<int,int>> v(m.begin(),m.end());
+    sort(v.begin(),v.end(),cmp);
+    for(auto tmp:v){
+        cout<<tmp.first<<tmp.second<<endl;
+    }
+    return 0;
+}
+
+```
+
+### string
+
+#### 读入一行
+
+``` c++
+string s;
+getline(cin, s);
+```
+
+
+
+####  读入一个单词
+
+``` c++
+string s;
+cin >> s;
+```
+
+#### 读入一个字母
+
+``` c++
+char s;
+cin >>s;
+```
+
+#### count
+
+``` c++
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+	string s;
+	int n;
+	getline(cin, s);
+	n = count(s.begin(), s.end(), ' ');
+	cout << n;
+	return 0;
+}
+```
+
+> 输入：
+>
+> 121212 12122 2
+>
+> 输出：
+>
+> 2
+
+#### 3.5 find()
+
+``` c++
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+	string s;
+	int n;
+	getline(cin, s);
+	int i = s.find('i');
+	cout <<i;
+	return 0;
+}
+```
+
+> 若找不到则返回-1
+
+#### 3.6 统计一个子字符串在另一个字符串中出现的次数
+
+``` c++
+int proc(char* str, char* sub)
+{
+	int n;
+	char* p, * r;
+	n = 0;
+	while (*str){
+		p = str;
+		r = sub;
+		while (*r){
+			if (*p == *r){
+				p++;
+				r++;
+			}
+			else
+				break;
+		}
+		if (*r == '\0') n++;
+		str++;
+	}
+	return n;
+}
+
+```
+
+#### 
+
+#### 3.7 数字转字符
+
+``` c++
+ string s="1234";
+ int i;
+ stringstream ss;
+ ss<<s;
+ ss>>i;
+ cout<<i;
+
+ss.str("");
+ss.clear();
+```
+
+***\*atoi函数（将字符串转换成整型数）\****
+
+**atof（将字符串转换成浮点型数）** 
+
+***\*itoa（把一整数转换为字符串 ）\****
+
+` #include<stdlib.h>`
+
+#### 3.8 substr
+
+``` c++
+/**begin是头迭代器，end是尾迭代器*/
+string s="5418340";
+s=s.substr(1,3);//取418,取索引为1，往后截断3个
+s=s.substr(1,-1);//索引为1，截断到最后
+cout<<s;
+```
+
+#### 3.9 大小写
+
+| tolower(c) | 如果c是大写字母，则返回其小写字母形式，否则直接返回c |
+| ---------- | ---------------------------------------------------- |
+| toupper(c) | 如果c是小写字母，则返回其大写字母形式，否则直接返回c |
+
+#### 3.10  strcmp()
+
+(const char *s1,const char * s2)
+
+strcmp(字符串1，字符串2)
+
+当s1<s2时，返回为负数
+
+当s1=s2时，返回值= 0
+
+当s1>s2时，返回正数
+
+#### 3.11 一个字符串按字典序排序
+
+``` c++
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int cmp(const void* a, const void* b) {
+	return strcmp((const char*)a, (const char*)b);
+}
+
+int main() {
+	char ss[105];
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> ss;
+		qsort(ss, strlen(ss), sizeof(char), cmp);
+		ss[0] = toupper(ss[0]);
+		cout << ss;
+		cout << endl;
+	}
+}
+```
+
+#### 3.12 一组字符串按字典序排序
+
+``` c++
+//my
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int cmp(const void* a, const void* b) {
+	return strcmp((const char*)a, (const char*)b);
+}
+
+int main() {
+	char ss[105][105];
+	int n;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> ss[i];
+		for (int j = 0; j < strlen(ss[i]); j++) {
+			
+			ss[i][j] = tolower(ss[i][j]);
+			
+		}
+		ss[i][0] = toupper(ss[i][0]);
+		
+	}
+	qsort(ss, n, sizeof(ss[0]), cmp);
+	for (int i = 0; i < n; i++) {
+		cout << ss[i]<<endl;
+	}
+	return 0;
+}
+```
+
+``` c++
+//lhc's code
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int n;
+char* ss[105], mm[105][105], * tmp;
+
+int cmp(const void* a, const void* b) {
+    return strcmp(*(const char**)a, *(const char**)b);
+}
+
+void check_s(const char* p) {
+    while (*p) {
+        if (*p == ' ') {
+            puts("YES");
+            return;
+        }
+        ++p;
+    }
+    puts("NO");
+}
+
+int main(int argc, char** argv) {
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++i) {
+        scanf("%s", mm[i]);
+        tmp = mm[i];
+        while (*tmp) {
+            if (*tmp == 'x' || *tmp == 'X') *tmp = ' ';
+            ++tmp;
+        }
+        ss[i] = mm[i];
+    }
+    qsort(ss, n, sizeof(ss[0]), cmp);
+    for (int i = 0; i < n; ++i) {
+        printf("%s", ss[i]);
+        check_s(ss[i]);
+    }
+    return 0;
+}
+```
+
+#### 3.13 反转
+
+```c++
+reverse(str.begin(), str.end());
+```
+
+#### 3.14 进制
+
+```c++
+#include<iostream>
+#include<string>
+#include<sstream>
+using namespace std;
+int main(void)
+{
+	string s="20";
+	int a;
+	stringstream ss;
+	ss<<hex<<s;    //以16进制读入流中
+	ss>>a;        //10进制int型输出
+	cout<<a<<endl;
+        return 0;
+}
+//输出：32
+```
+
+```c++
+#include<cstdio>
+#include<iostream>
+#include<string>
+#include<sstream>
+using namespace std;
+int main(void)
+{
+	string s1,s2;
+	int a=30;
+	stringstream ss;
+	ss<<oct<<a;        //10进制转成八进制读入流中，再以字符串输出
+	ss>>s1;			
+	cout<<s1<<endl;        //输出：36
+	ss.clear();		//不清空可能会出错。
+	ss<<hex<<a;		 //10进制转成十六进制读入流中，，再以字符串输出
+	ss>>s2;			
+	cout<<s2<<endl;        //输出：1e
+    return 0;
+}
+```
+
+
+
+### priority_queue
+
+#### 4.1 定义
+
+优先队列
+
+``` c++
+//升序队列 top最小
+priority_queue <int,vector<int>,greater<int> > q;
+//降序队列 top最大
+priority_queue <int,vector<int>,less<int> >q;
+```
+
+#### 4.2 pair在priority_queue中
+
+**先比较第一个元素当第一个相等时再比较第二个**
+
+### deque
+
+```c++
+deque<int>	d;
+d.push_back(n);					//从尾部插入元素 
+d.push_front(n);				//从头部插入元素
+d.insert(d.begin()+set,n); 		//在set位置后插入元素n
+
+d.pop_front();					//头部删除元素
+d.pop_back();					//尾部删除元素
+d.erase(d.begin()+set);			//中间删除元素(下表从0开始)
+
+/*清空队列*/
+d.clear();
+ 
+/*返回元素个数*/
+d.size();
+
+```
+
+
+
+### ctime
+
+```c++
+#include<iostream>  
+#include <ctime>
+ 
+using namespace std;
+ 
+int main() {
+ 
+	struct tm t1 = { 0 };
+	struct tm t2 = { 0 };
+	double seconds;
+ 
+	t1.tm_year = 2016 - 1900; t1.tm_mon = 10; t1.tm_mday = 21;//现在时间2016,11,21
+	t2.tm_year = 2017 - 1900; t2.tm_mon = 5; t2.tm_mday = 7;//高考时间2017,6,7
+ 
+	seconds = difftime(mktime(&t2), mktime(&t1));//转换结构体为time_t,利用difftime,计算时间差
+ 
+	cout << seconds / 86400 << endl;//最后输出时间,因为一天有86400秒(60*60*24)
+	system("pause");
+	return 0;
+}
+```
+
+```c++
+  struct tm
+
+       {
+
+           int tm_sec;    //秒，[0,59]
+
+           int tm_min；//分钟，[0,59]
+
+           int tm_hour；//小时，[0,23]
+
+           int tm_year；//年，用的时候要加1900
+
+           int tm_mon；//月，用的时候加1，因为范围是[0,11] 
+
+           int tm_mday;  //日，[0,31]
+
+           int tm_wday；//表示星期几，[0,6]
+
+           int tm_isdst； //没用过，也没查过
+
+       }
+```
+
+
+
+```c++
+struct tm *localtime(const time_t *time);
+```
+
+该函数将 time_t 转换为本地时间，本地时间是我们经常使用的
+
+```c++
+time_t mktime(struct tm *time);
+```
+
+该函数用于将日历时间转换为 time_t 格式(自 1970 年 1 月 1 日以来经过的秒数)
 
 
 
-<img src="D:\typora\pic\AIK\image-20210606163006057.png" alt="image-20210606163006057" style="zoom:50%;" />
 
-<img src="D:\typora\pic\AIK\image-20210606163043782.png" alt="image-20210606163043782" style="zoom:50%;" />
-
-<img src="D:\typora\pic\AIK\image-20210606163105711.png" alt="image-20210606163105711" style="zoom:50%;" />
-
-<img src="D:\typora\pic\AIK\image-20210606163125794.png" alt="image-20210606163125794" style="zoom:50%;" />
-
-<img src="D:\typora\pic\AIK\image-20210606163144190.png" alt="image-20210606163144190" style="zoom:50%;" />
-
-<img src="D:\typora\pic\AIK\image-20210606163205672.png" alt="image-20210606163205672" style="zoom:50%;" />
-
-<img src="D:\typora\pic\AIK\image-20210606163226960.png" alt="image-20210606163226960" style="zoom:50%;" />
-
-## CSS
-
-![image-20210606203310159](D:\typora\pic\AIK\image-20210606203310159.png)
-
-![image-20210606203331328](D:\typora\pic\AIK\image-20210606203331328.png)
-
-![image-20210606203350024](D:\typora\pic\AIK\image-20210606203350024.png)
-
-![image-20210606203402672](D:\typora\pic\AIK\image-20210606203402672.png)
-
-![image-20210606204104010](D:\typora\pic\AIK\image-20210606204104010.png)
-
-![image-20210606204322566](D:\typora\pic\AIK\image-20210606204322566.png)
-
-## 实例
-
-### 8-1 8-2
-
-![image-20210609191221057](D:\typora\pic\AIK\image-20210609191221057.png)
-
-### 8-3
-
-![image-20210611125935610](D:\typora\pic\AIK\image-20210611125935610.png)
-
-# PS
-
-### 自由变换
-
-CTRL + T
-
-### shift
-
-
-
-等比变换
-
-加选区
-
-### alt
-
-减选区
-
-### 复制图层
-
-CTRL + J
-
-alt 拖动
-
-### 抠图
-
-矩形选择工具->拷贝到图层通道
-
-### 快捷填充前景颜色
-
-alt + delete
-
-### 取消选区
-
-ctrl + D
-
-### 空格
-
-使用套索时按空格拖动图
-
-### 半径的大小
-
-alt 右键 左右划
-
-### 放大图像
-
-alt 鼠标滚轮
-
-
-
-jpg有背景
-
-png可以透明无背景
-
-
-
-蒙版，盖住智能对象
-
-剪切蒙版
-
-![P4](D:\typora\pic\AIK\image-20210501195525323.png)
 
 # 算法
 
-## 递归
-
-### 1.1 N苹果放N盘子
+**N苹果放N盘子 递归**
 
 ``` c++
 #include<iostream>
@@ -3505,7 +3601,9 @@ int main() {
 }
 ```
 
-### 1.2 波兰表达式
+
+
+**波兰表达式**
 
 ``` c++
 #include<iostream>
@@ -3531,7 +3629,9 @@ int main() {
 }
 ```
 
-### 1.3 记忆递归（路径和）
+
+
+**记忆递归（路径和）**
 
 ``` c++
 #include<iostream>
@@ -3559,7 +3659,9 @@ int main() {
 }
 ```
 
-### 1.4 汉洛塔
+
+
+**汉洛塔**
 
 ``` c++
 #include<stdio.h>
@@ -3579,7 +3681,9 @@ void hlt(int n,char k1 ,char k2,char k3){
 }
 ```
 
-### 1.5 2次幂指数分解
+
+
+**2次幂指数分解**
 
 ```c++
 #include <iostream>
@@ -3643,7 +3747,45 @@ int main(int argc, char* argv[])
 
 [堆排序(heapsort)bilibili链接](https://www.bilibili.com/video/BV1Eb41147dK?from=search&seid=5281747329959496452)
 
-## 二分法
+
+
+**二分法**
+
+二分搜索
+
+```c++
+#include<iostream>
+
+#include<vector>
+
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	int targ;
+	cin >> targ;
+	int l = 0, r = n - 1;
+	while (l <= r)
+	{
+		int mid = (l + r) / 2;
+		if (a[mid] == targ) {
+			cout << mid << endl;
+			return 0;
+		}
+		if (a[mid] > targ) r = mid-1;
+		else l = mid+1;
+	}
+	cout << "-1" << endl;
+	return 0;
+}
+```
+
+
 
 ``` c++
 #include<iostream>
@@ -3667,47 +3809,15 @@ int main() {
 }
 ```
 
-环算法（判断环）
 
-[leetcode原题](https://leetcode.com/problems/friend-circles/)
 
-``` c++
-class Solution {
-public:
-    int findCircleNum(vector<vector<int>>& M) {
-        int a[1000];
-        int cnt = 0,p,q;
-        for (int i = 0; i < M.size();i++){
-            a[i] = i;
-        }
-        for(int i = 0; i < M.size();i++){
-            for(int j = 0; j < M.size();j++){
-                
-                if (i >= j) continue;
-                if(M[i][j]==1){
-                    p = i;
-                    q = j;
-                    while(a[p]!=p){
-                        p = a[p];
-                    }
-                     while(a[q]!=q){
-                        q = a[q];
-                    }
-                    a[q] = p;
-                }
-            }
-        }
-        for (int i = 0; i < M.size();i++){
-            if(a[i]==i){
-                cnt++;
-            }
-        }
-        return cnt;
-    }
-};
-```
+**环算法 链表** 
 
-数学 异或
+![微信图片_20211202205931](D:\typora\pic\AIK\微信图片_20211202205931.jpg)
+
+
+
+**数学 异或**
 
 1. k 个相同的数的异或和，当 k为奇数时，结果是这个数本身，否则结果是 0。
 2. 任何数与0的异或值是它本身。
@@ -3717,7 +3827,9 @@ public:
 a^b //异或的符号
 ```
 
-负进制
+
+
+**负进制**
 
 ``` c++
 #include<bits/stdc++.h>
@@ -3752,9 +3864,9 @@ int main() {
 }
 ```
 
-组合数
 
-![img](D:%5C%E7%A0%81%E5%AD%A6%5CAIK.assets%5Cclip_image002-1611456715294-1611748650900.png)
+
+**组合数**
 
 *杨辉三角打表：*
 
@@ -3782,7 +3894,9 @@ int main() {
 }
 ```
 
-### 高精度
+
+
+**高精度**
 
 ``` c++
 //题目描述
@@ -3830,7 +3944,9 @@ int main() {
 }
 ```
 
-前缀和
+
+
+**前缀和**
 
 |            | 定义式                                                       | 递推式                                                       |
 | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -3870,7 +3986,115 @@ int main()
 
 
 
-公因数公倍数
+**差分**
+
+* 普通方法：
+
+```c++
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int  main() {
+	
+	int n, m;
+	cin >> n >> m;
+	vector<vector<int > > G(n + 1, vector<int>(n + 1));
+	for (int i = 0; i < m; i++) {
+		int x1, y1, x2, y2;
+		cin >> x1 >> y1 >> x2 >> y2;
+		for (int j = x1; j <= x2; j++) {
+			for (int k = y1; k <= y2; k++) {
+				G[j][k] ++;
+			}
+		}
+	}
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= n; j++) {
+			cout << G[i][j]<<" ";
+		}
+		cout << endl;
+	}
+
+
+}
+```
+
+* 一维差分：
+
+```c++
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int  main() {
+	
+	int n, m;
+	cin >> n >> m;
+	vector<vector<int > > G(n + 2, vector<int>(n + 2));
+	for (int i = 0; i < m; i++) {
+		int x1, y1, x2, y2;
+		cin >> x1 >> y1 >> x2 >> y2;
+		for (int j = x1; j <= x2; j++) {
+			G[j][y1]++;
+			G[j][y2 + 1]--;
+			
+		}
+	}
+	for (int i = 1; i <= n; i++) {
+		int ans = 0;
+		for (int j = 1; j <= n; j++) {
+			ans += G[i][j];
+			cout <<ans <<" ";
+		}
+		cout << endl;
+	}
+
+
+}
+```
+
+* 二维差分：
+
+```c++
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int  main() {
+	
+	int n, m;
+	cin >> n >> m;
+	vector<vector<int > > G(n + 2, vector<int>(n + 2));
+	for (int i = 0; i < m; i++) {
+		int x1, y1, x2, y2;
+		cin >> x1 >> y1 >> x2 >> y2;
+		
+			G[x1][y1]++;
+			G[x2+1][y2+1]++;
+			G[x1][y2 + 1]--;
+			G[x2 + 1][y1]--;
+			
+		
+	}
+	vector<vector<int > > D(n + 2, vector<int>(n + 2));
+	for (int i = 1; i <= n; i++) {
+		
+		for (int j = 1; j <= n; j++) {
+			
+			D[i][j] = D[i - 1][j] + D[i][j - 1] - D[i-1][j-1] + G[i][j];
+			cout << D[i][j]<<" ";
+		}
+		cout << endl;
+	}
+
+
+}
+```
+
+
+
+**公因数公倍数**
 
 ``` c++
 int gcd(int a, int b){
@@ -3883,7 +4107,7 @@ int lcm(int a, int b){
 
 
 
-约瑟夫环
+**约瑟夫环**
 
 ```c++
 #include<bits/stdc++.h>
@@ -3905,7 +4129,7 @@ int main() {
 
 
 
-并查集
+**并查集**
 
 ``` c++
 #include<bits/stdc++.h>
@@ -3949,9 +4173,7 @@ int main() {
 }
 ```
 
-
-
-## BFS
+BFS
 
 ``` c++
 元素a;
@@ -3969,7 +4191,7 @@ while(!q.empty()){
 }
 ```
 
-## DFS
+DFS
 
 ``` c++
 dfs(int i){
@@ -4030,7 +4252,7 @@ int main() {
 
 
 
-dp 最大区间和
+**dp 最大区间和**
 
 ```c++
 #include<bits/stdc++.h>
@@ -4107,7 +4329,7 @@ int main() {
 
  
 
-连通 岛屿 最短
+**连通 岛屿 最短**
 
 ```c++
 #include<bits/stdc++.h>
@@ -4184,64 +4406,9 @@ int main() {
 }
 ```
 
-求A^{B^{C}} A^B^C
 
-```c++
-#include<bits/stdc++.h>
 
-using namespace std;
-
-const int N=2e5+10;
-
-int qpow(int a,int b,int p){
-
-    int res=1;
-
-    for(;b;b>>=1){
-
-        if(b&1){
-
-            res=1ll*res*a%p;
-
-        }
-
-        a=1ll*a*a%p;
-
-    }
-
-    return res;
-
-}
-
-int get(int a,int b,int c,int p){
-
-    if(a%p==0){
-
-        return 0;
-
-    }
-
-    return qpow(a,qpow(b,c,p-1),p);
-
-}
-
-int main(){
-
-    int a,b,c;cin>>a>>b>>c;
-
-    int x=get(a,b,c,2);
-	
-    int y=get(a,b,c,5);
-
-    int res=(x*5+y*6)%10;
-
-    cout<<res<<endl;
-
-}
-
-```
-
-A * B * C < K 的个数
+**A * B * C < K 的个数**
 
 ```c++
 #include<bits/stdc++.h>
@@ -4273,7 +4440,9 @@ int main()
  } 
 ```
 
-双dfs
+
+
+**双dfs**
 
 ```c++
 #include<iostream>
@@ -4364,7 +4533,90 @@ int main() {
 }
 ```
 
-dijkstra
+
+
+## 图的最短路径算法
+
+**无权图 单源最短路径算法**
+
+```c++
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+const int INF = 1 << 29;
+vector<vector<int> > G;//临界矩阵
+vector<int> dist;
+vector<int> vis;
+vector<int> P;
+int n;
+
+
+void in() {
+	int m;
+	cin >> n >> m;
+	G = vector<vector<int> >(n + 1);
+	dist = vector<int>(n + 1,INF);
+	P = vector<int>(n + 1, -1);
+	vis = vector<int>(n + 1, 0);
+	int x, y, dis;
+	for (int i = 0; i < m; i++) {
+		cin >> x >> y;
+		G[x].push_back(y);
+
+	}
+}
+
+void path(int u, int v) {
+	cout << v ;
+	while (P[v] != -1) {
+		cout <<"->"<< P[v];
+		v = P[v];
+	}
+
+}
+
+int main() {
+
+	in();
+
+	queue<int> q;
+	dist[1] = 0;
+	vis[1] = 1;
+	q.push(1);
+
+	while (!q.empty())
+	{
+		int u = q.front();
+		q.pop();
+		
+
+		for (int i = 0; i < G[u].size(); i++) {
+			int v = G[u][i];
+			if (vis[v] == 0) {
+				dist[v] = dist[u] + 1;
+				P[v] = u;
+				q.push(v);
+			}
+		}
+
+		vis[u] = 1;
+	}
+	
+	for (int i = 1; i <= n; i++) {
+		cout << i << " ";
+		path(1, i);
+		cout << "=";
+		cout << dist[i] << endl;
+	}
+
+}
+```
+
+
+
+**dijkstra 有权图 单源最短路径**
 
 ```c++
 #include<iostream>
@@ -4449,7 +4701,9 @@ int main() {
 }
 ```
 
-SPFA
+
+
+**SPFA**
 
 ```c++
 #include<iostream>
@@ -4529,7 +4783,9 @@ int main() {
 }
 ```
 
-Floyd
+
+
+**Floyd 多源最短路径**
 
 ```c++
 #include<iostream>
@@ -4601,7 +4857,9 @@ int main() {
 }
 ```
 
-四位数组 dp 两条路径和最大
+
+
+**四位数组 dp 两条路径和最大**
 
 ```c++
 #include<iostream>
@@ -4643,7 +4901,48 @@ int main() {
 }
 ```
 
-最长上升子序列
+
+
+**最长公共子序列**
+
+```c++
+#include<iostream>
+#include<vector>
+
+using namespace std;
+const int INF = 1 << 29;
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n;
+	cin >> n;
+	vector<int> a(n + 1), b(n + 1);
+	vector<vector<int> > dp(n + 1, vector<int>(n + 1, 0));
+
+	for (int i = 1; i <= n; i++) {
+		cin >> a[i];
+	}
+	for (int i = 1; i <= n; i++) {
+		cin >> b[i];
+	}
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= n; j++) {
+			if (a[i] == b[j]) {
+				dp[i][j] = max(dp[i - 1][j - 1] + 1,dp[i][j]);
+			}
+			else {
+				dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+			}
+		}
+	}
+	cout << dp[n][n] <<endl;
+	
+}
+```
+
+**最长上升子序列**
+
+n方
 
 ```
 #include<iostream>
@@ -4675,60 +4974,1047 @@ int main() {
 }
 ```
 
-拓扑排序 入度
+nlogn
+
+```c++
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n;
+	cin >> n;
+	vector<int> b(n);
+	
+	vector<int> ans(100000,INF);
+	
+	for (int i = 0; i < b.size(); i++) {
+		*lower_bound(ans.begin(), ans.end(), b[i]) = b[i];
+	}
+
+	printf("%d", lower_bound(ans.begin(), ans.end(), INF) - ans.begin());
+}
+```
+
+
+
+**无重复子串**
+
+给定一个字符串，找字符中的最大子串，这个子串中没有重复的符号
+
+```c++
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char,int> mp;
+        int mx = 0;
+        int cnt = 0;
+       
+       int right = 0;
+        int left  = 0;
+        int n = s.size();
+        while(right< n){
+          
+            if(mp.find(s[right]) != mp.end()){
+                left = max(left,mp[s[right]]+1);
+              
+            }
+            
+            cnt = right - left + 1;
+            
+              mx = mx > cnt ? mx : cnt;
+            mp[s[left]] = left;
+            mp[s[right]] = right;
+            right++;
+            
+           
+        }
+        return mx;
+    }
+};
+```
+
+
+
+**质因数的个数**
+
+<img src="D:\typora\pic\AIK\image-20211004194602776.png" alt="image-20211004194602776" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20211004194613422.png" alt="image-20211004194613422" style="zoom:50%;" />
+
+
+
+**exgcd 不定方程 ax+by 最小整数解**
 
 ```c++
 #include<iostream>
 
-#include<vector>
+using namespace std;
 
-#include<queue>
+typedef long long ll;
+
+void exgcd(ll a, ll b, ll& x, ll& y) {
+	if (b == 0) {
+		x = 1;
+		y = 0;
+		return;
+	}
+	exgcd(b, a % b, x, y);
+	ll tp = x;
+	x = y;
+	y = tp - (a / b) * y;
+	return;
+}
+int main() {
+	ll x, y;
+	exgcd(4, 2, x, y);
+	cout << x << " " << y << endl;
+}
+```
+
+<img src="D:\typora\pic\AIK\image-20211015135827801.png" alt="image-20211015135827801" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20211015154825403.png" alt="image-20211015154825403" style="zoom:50%;" />
+
+
+
+<img src="D:\typora\pic\AIK\image-20211015135803285.png" alt="image-20211015135803285" style="zoom:50%;" />
+
+<img src="D:\typora\pic\AIK\image-20211015141702501.png" alt="image-20211015141702501" style="zoom:50%;" />
+
+```c++
+#include<iostream>
 
 using namespace std;
 
+typedef long long ll;
+
+void exgcd(ll a, ll b, ll& x, ll& y) {
+	if (b == 0) {
+		x = 1;
+		y = 0;
+		return;
+	}
+	exgcd(b, a % b, x, y);
+	ll tp = x;
+	x = y;
+	y = tp - (a / b) * y;
+	return;
+}
+
+ll gcd(ll a, ll b) {
+	return b ? gcd(b, a % b) : a;
+}
+int main() {
+	ll x2, y2, m, n, L,x,y;
+	cin >> x2 >> y2 >> m >> n >> L;
+	if (m > n) {
+		swap(x2, y2);
+		swap(m, n);
+	}
+	
+	ll g = gcd( n - m, L);
+	
+	if ((y2 - x2)%g != 0) {
+		cout << "Impossible" << endl;
+	}
+	else {
+		ll a = L;
+		ll b = n - m;
+		ll c = x2 - y2;
+		exgcd(L, n-m, x, y);
+		
+		//cout << x << " " << y << endl;
+		
+		cout <<((c*y/g)%(a/g)+(a/g))%(a/g) << endl;
+	}
+}
+```
+
+
+
+
+
+
+
+**树 已知前序中序求后序**
+
+```c++
+#include<iostream>
+#include<vector>
+using namespace std;
+
+string pre, in;
+
+void post(int preL,int inL, int n) {
+	if (n == 0) {//子树为空
+		return;
+	}
+	if (n == 1) {
+		cout << pre[preL] << " ";
+		return;
+	}
+	
+	int L = in.find(pre[preL]) - inL;
+	int R = n - L - 1;
+	
+
+	post(preL + 1, inL, L);
+	post(preL + 1 + L, inL + L + 1, R);
+	cout << pre[preL] << " "; //最后输出根节点
+}
+
+int main() {
+	
+	pre = "123456";
+	in  = "324165";
+	
+	post(0, 0, 6);
+}
+```
+
+```c++
+#include <bits/stdc++.h>  //万能头文件
+using namespace std;
+string a, b;   //把中前遍历当做字符串输入
+void houxu(int x, int y, int p, int q) {  //x~y为前序遍历 p~q为中序遍历
+    if (x > y || p > q) return;//规定边界条件
+    else {
+        int i = b.find(a[x]);   //利用根左右的特性来在中序队列中查找
+        houxu(x + 1, x + i - p, p, i - 1);      //递归左子树
+        houxu(x + i - p + 1, y, i + 1, q);    //递归右子树
+        cout << a[x];
+    }
+}
+int main() {
+    cin >> b >> a;//反一下输入
+    int l = a.length() - 1;//因为是0开始，所以要减一
+    houxu(0, l, 0, l);//递归
+    return 0;
+}
+```
+
+
+
+**雪山 记忆化**
+
+```c++
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+typedef struct node {
+	int x, y;
+	node(int x, int y) :x(x), y(y) {}
+}node;
+
+int R, C;
+int dir[4][2] = { {1,0},{0,-1},{-1,0},{0,1} };
+vector<vector<int>> G;
+vector<vector<int> > dp;
+int mx = 0;
+
+int dfs(int i, int j) {
+	if (dp[i][j] != 0) {
+		return dp[i][j];
+	}
+	dp[i][j] = 1;
+	for (int k = 0; k < 4; k++) {
+		int u = i + dir[k][0];
+		int v = j + dir[k][1];
+		if (u >= 1 && u <= R && v >= 1 && v <= C && G[u][v] < G[i][j]) {
+
+			dp[i][j] = max(dfs(u,v) + 1,dp[i][j]);
+		}
+	}
+	return dp[i][j];
+}
+
 int main() {
 
-	int n,m;
 
-	cin >> n  >> m;
-	vector<vector<int> > G(n + 1);
-	vector<int> indegree(n + 1,0);
-	vector<int> ans;
-
-	for (int i = 0; i < m; i++) {
-		int u, v;
-		cin >> u >> v;
-		G[u].push_back(v);
-		indegree[v]++;
-	}
-
-	queue<int> q; //入度为0的点
-
-	for (int i = 1; i <= n; i++) {
-		if (indegree[i] == 0) {
-			q.push(i);
-			
+	cin >> R >> C;
+	
+	G = vector<vector<int>>(R + 1, vector<int>(C + 1,0));
+	dp = vector<vector<int>>(R + 1, vector<int>(C + 1, 0));
+	for (int i = 1; i <= R; i++) {
+		for (int j = 1; j <= C; j++) {
+			cin >> G[i][j];
 		}
 	}
 
-	while (!q.empty()) {
-		int now = q.front();
-		q.pop();
-		ans.push_back(now);
-		for (int i = 0; i < G[now].size(); i++) {
+	int ans = 0;
 
-			int u = G[now][i];
-			indegree[u]--;
-			if (indegree[u] == 0) {
-				q.push(u);	
-			}
+	for (int i = 1; i <= R; i++) {
+		for (int j = 1; j <= C; j++) {
+			dfs(i, j);
+		}
+	}
+	for (int i = 1; i <= R; i++) {
+		for (int j = 1; j <= C; j++) {
+			ans = max(ans, dp[i][ j]);
 		}
 	}
 
-	for (int i = 0; i < ans.size(); i++) {
-		cout << ans[i] << " ";
-	}
+
+	cout << ans << endl;
 
 }
 ```
 
+
+
+## 最小生成树算法
+
+**最小生成树 kruskal算法**
+
+```c++
+#include<iostream>
+#include<vector>
+#include<set>
+#include<algorithm>
+using namespace std;
+
+
+typedef struct Edge {
+	int v1, v2;
+	int weight;
+	Edge():v1(0),v2(0),weight(0){}
+};
+
+int n, m;
+vector<Edge> G;
+vector<int> s;
+
+int find_root(int u) {
+	return s[u] == u ? u : find_root(s[u]);
+}
+
+void union_node(int u,int v){
+	int x = find_root(u);
+	int y = find_root(v);
+
+	if (x != y) {
+		s[y] = s[x];
+	}
+}
+
+int cmp(Edge a, Edge b) {
+	return a.weight < b.weight;
+}
+
+void init() {
+	cin >> n >> m;
+
+	s = vector<int>(n + 1);
+
+	for (int i = 0; i <= n; i++) {
+		s[i] = i;
+	}
+
+	for (int i = 0; i < m; i++) {
+		Edge tp;
+		cin >> tp.v1 >> tp.v2 >> tp.weight;
+		G.push_back(tp);
+	}
+
+	sort(G.begin(), G.end(),cmp);
+}
+
+int main() {
+	
+	init();
+
+	int cnt = 0;
+	vector<Edge> T;
+	while (T.size() < n - 1) {
+		Edge e = G[cnt++];
+		if (find_root(e.v1) != find_root(e.v2)) {
+			T.push_back(e);
+			union_node(e.v1, e.v2);
+		}
+	}
+
+	for (int i = 0; i < T.size(); i++) {
+		cout << T[i].v1 << " " << T[i].v2 << endl;
+	}
+}
+
+```
+
+
+
+**最小生成树 prim算法**
+
+```c++
+#include<iostream>
+#include<vector>
+
+using namespace std;
+const int INF = 1 << 29;
+
+typedef struct uvd {
+	int u, v, d;
+	uvd():u(0),v(0),d(INF){}
+};
+
+int main() {
+	int n, m;
+	cin >> n >> m;
+	vector<uvd> lowcost(n+1);
+	vector<int> set(n + 1, 0);
+	vector<vector<int> > G(n + 1, vector<int>(n + 1, INF));
+	vector<uvd> ans;
+	for (int i = 0; i < m; i++) {
+		int u, v,dis;
+		cin >> u >> v;
+		cin >> dis;
+		G[u][v] = G[v][u] = dis;
+	}
+	set[1] = 1;
+	int u = 1;
+	for (int i = 1; i < n; i++) {
+		for (int j = 1; j <= n; j++) {
+			if (INF != G[u][j] && 0 == set[j]) {
+				if (lowcost[j].d > G[u][j]) {
+					lowcost[j].d = G[u][j];lowcost[j].u = u;lowcost[j].v = j;
+				}
+			}
+		}
+		int m = INF, num = 0;
+		for (int j = 1; j <= n; j++) {
+			if (0 == set[j] && m > lowcost[j].d) {
+				m = lowcost[j].d;
+				num = j;
+			}
+		}
+		set[num] = 1;
+		u = lowcost[num].v;
+		lowcost[num].d = INF;
+		ans.push_back(lowcost[num]);//加入这条边
+	}
+	for (int i = 0; i < ans.size(); i++) {
+		cout << ans[i].u << " " << ans[i].v << endl;
+	}
+}
+```
+
+
+
+**最优二叉树 Huffman算法 哈夫曼** 
+
+priority_queue实现
+
+```c++
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<queue>
+#include<unordered_map>
+#include<string>
+
+const int INF = 2 << 29;
+using namespace std;
+
+unordered_map<char,string> ans;
+
+typedef class Data {
+public:
+	char c;
+	int num;
+	Data(char c, int num):c(c),num(num){}
+	Data() {}
+}D;
+
+
+
+typedef class tree : public Data{
+public:
+	tree* L, * R;
+	tree(char c, int num) :D(c,num){}
+	tree() {}
+}*pt,tr;
+
+struct cmp
+{
+	bool operator()(pt a, pt b) {
+		
+		return a->num> b->num;
+	}
+};
+
+pt creat(char c, int num) {
+	pt node = new tree;
+	node->c = c;
+	node->num = num;
+	node->L = nullptr;
+	node->R = nullptr;
+	return node;
+}
+
+void make_tree(pt root, string s) {
+	if (root->c != '#') {
+		ans[root->c] = s;
+		return;
+	}
+	make_tree(root->L, s + '0');
+	make_tree(root->R, s + '1');
+}
+
+int main() {
+
+	priority_queue<pt, vector<pt> , cmp > q;
+	//A, B, C, D, E, F，分别含有10, 35, 40, 50, 60和200
+	
+	q.push(creat('A', 10));
+	q.push(creat('B', 35));
+	q.push(creat('C', 40));
+	q.push(creat('D', 50));
+	q.push(creat('E', 60));
+	q.push(creat('F', 200));
+	
+	while (q.size() != 1) {
+		pt u = q.top();
+		q.pop();
+		pt v = q.top();
+		q.pop();
+
+		pt r = creat('#', u->num + v->num);
+		r->L = u;
+		r->R = v;
+
+		q.push(r);
+	}
+	//cout << q.top()->num;
+
+	string s;
+
+	make_tree(q.top(), s);
+	cout << ans['A'] << endl;
+
+}
+```
+
+
+
+```c++
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iomanip>
+const int INF = 2 << 29;
+using namespace std;
+
+void prt(vector<int> a) {
+	for (int i = 0; i < a.size(); i++) {
+		cout << setw(5)<<setiosflags(ios::left);
+		if (a[i] != INF) {
+			cout << a[i] ;
+		}
+		else {
+			cout << " ";
+		}
+		
+	}
+	cout << endl;
+}
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> a(n);
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	sort(a.begin(), a.end());
+	prt(a);
+	for (int i = 0; i < n-1; i++) {
+		int min1 = INF, min2 = INF, pos1, pos2;
+		for (int j = 0; j < n; j++) {
+			if (min1 > a[j]) {
+				min1 = a[j];
+				pos1 = j;
+			}
+		}	
+		a[pos1] = INF;
+		for (int j = 0; j < n; j++) {
+			if (min2 > a[j]) {
+				min2 = a[j];
+				pos2 = j;
+			}
+		}
+		a[pos2] = min1 + min2;
+		prt(a);
+	}
+
+}
+
+```
+
+
+
+**KMP**
+
+```c++
+#include<iostream>
+#include<string>	
+#include<vector>
+
+using namespace std;
+
+
+
+vector<int> get_next(string T) {
+	vector<int> Next(T.size());
+	int i = 0;
+	int j = -1;
+	Next[0] = -1;
+	while (i < T.size() - 1) {
+		if (j == -1 || T[i] == T[j]) {
+			i++;
+			j++;
+			Next[i] = j;
+		}
+		else
+			j = Next[j];
+	}
+	return Next;
+}
+
+int Index_KMP(string S, string T) {
+	vector<int> Next = get_next(T);
+	int i = 0, j = 0;
+	while ((i < (int)S.size()) && (j < (int)T.size())) {
+		if (j == -1 || S[i] == T[j]) {
+			i++;
+			j++;
+		}
+		else {
+			j = Next[j];
+		}
+	}
+
+	if (j == T.size()) { return i - T.size(); }
+	else return -1;
+}
+
+int main() {
+	string S = "ewabaabcaaab";
+	string T = "aaab";
+		
+	cout << Index_KMP(S, T);
+
+}
+```
+
+
+
+**multiset lower_bound upper_bound 平衡二叉树**
+
+```c++
+#include<iostream>
+#include<set>
+
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	multiset<int> ms;
+	for (int i = 0; i < n; i++) {
+		int q, x;
+		cin >> q >> x;
+		if (q == 1) {
+			auto lb = ms.lower_bound(x);
+			int ans = 1;
+			for (auto it = ms.begin(); it != lb; it++) {
+				ans++;
+			}
+			cout << ans << endl;
+		}
+		else if (q == 2) {
+			int t = 0;
+			for (auto it = ms.begin(); it != ms.end(); it++) {
+				t++;
+				if (t == x) {
+					cout << *it << endl;
+					break;
+				}
+			}
+
+		}
+		else if (q == 3) {
+			auto it = --ms.lower_bound(x);
+			if (it != ms.end()) {
+				cout << *it << endl;
+			}
+			else {
+				cout << "-2147483647" << endl;
+			}
+		}
+		else if (q == 4) {
+			auto it = ms.upper_bound(x);
+			if (it != ms.end()) {
+				cout << *it <<endl;
+			}
+			else {
+				cout << "2147483647" << endl;
+			}
+		}
+		else if (q == 5) {
+			ms.insert(x);
+		}
+	}
+}
+
+```
+
+
+
+**状压dp**
+
+[P1433 吃奶酪 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)](https://www.luogu.com.cn/problem/P1433)
+
+```c++
+//状压DP的时间复杂度为 O(n^2, 2^n)
+//通常只能通过N≤21的数据范围
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iomanip>
+#include<math.h>
+
+typedef struct point {
+	double x, y;
+};
+using namespace std;
+
+const int INF = 1 << 30;
+
+double dist(point a, point b) {
+	return sqrt((a.x - b.x) * (a.x - b.x)+ (a.y - b.y) * (a.y - b.y));
+}
+
+int main() {
+
+	int n;
+	cin >> n;
+	vector<point> p;
+	vector<vector<double> > G(n + 1, vector<double>(n + 1));
+	vector<vector<double> > dp(n+1,vector<double>((1<<n),INF));
+	
+	point start;
+	start.x = start.y = 0;
+	p.push_back(start);
+	for (int i = 0; i < n; i++) {
+		point pt;
+		cin >> pt.x >> pt.y;
+		p.push_back(pt);
+	}
+	for (int i = 0; i <= n; i++) {
+		for (int j = i; j <= n; j++) {
+			G[i][j] = G[j][i] = dist(p[i], p[j]);
+
+		}
+	}
+	for (int i = 1; i <= n; i++) {
+		dp[i][(1 << (i-1))] =  G[0][i];
+	}
+
+	for (int k = 1; k < (1 << n) ; k++) {
+		for (int i = 1; i <= n; i++) {
+			if ((k & (1 <<(i-1))) == 0) continue;
+
+			for (int j = 1; j <= n; j++) {
+				if (i == j) continue;
+				if ((k & (1 << (j - 1))) == 0) continue;
+				dp[i][k] = min(dp[i][k], dp[j][k - (1 << (i-1))]+G[i][j]);
+			}
+		}
+
+	}
+	double ans = INF;
+	for (int i = 1; i <= n; i++) {
+		ans = min(ans, dp[i][(1 << n) - 1]);
+	}
+	printf("%.2f\n", ans);
+}
+```
+
+
+
+树状数组
+
+<img src="D:\typora\pic\AIK\image-20211108203152674.png" alt="image-20211108203152674" style="zoom:33%;" />
+
+<img src="D:\typora\pic\AIK\image-20211108203240236.png" alt="image-20211108203240236" style="zoom:33%;" />
+
+<img src="D:\typora\pic\AIK\image-20211108203415269.png" alt="image-20211108203415269" style="zoom:50%;" />
+
+
+
+```c++
+int n;
+int a[1005],c[1005]; //对应原数组和树状数组
+
+int lowbit(int x){
+    return x&(-x);
+}
+
+void updata(int i,int k){    //在i位置加上k
+    while(i <= n){
+        c[i] += k;
+        i += lowbit(i);
+    }
+}
+
+int getsum(int i){        //求A[1 - i]的和
+    int res = 0;
+    while(i > 0){
+        res += c[i];
+        i -= lowbit(i);
+    }
+    return res;
+}
+```
+
+
+
+中缀表达式转后缀表达式
+
+1. isp > icp 时输出（isp栈内，icp栈外，同级栈内大，乘除大于加减，空栈的优先级为0，字母直接输出）
+
+2. 左括号不管
+
+3. 右括号一直退栈，直到遇到左括号
+
+   <img src="D:\typora\pic\AIK\微信图片_20211120204944.jpg" alt="微信图片_20211120204944" style="zoom:50%;" />
+
+
+
+**AOV网** （无权边）
+
+* AOV网：在一个表示*工程*的有向图中，用顶点表示活动，用弧表示活动之间的优先关系，称这样的有向图为顶点表示活动的网，简称AOV网。
+
+* AOV网中的弧表示活动之间存在的某种制约关系
+
+* 选课问题
+
+* 拓扑 dp 任务间存在顺序 
+
+  ```c++
+  #include<iostream>
+  #include<vector>
+  #include<queue>
+  
+  using namespace std;
+  
+  int main() {
+  	int n;
+  	cin >> n;
+  	vector<int> tim(n+1);
+  	vector<int> ind(n + 1,0);
+  	vector<int> dp(n + 1);
+  	vector<vector<int> > G(n+1);
+  
+  	
+  	for (int i = 1; i <= n; i++) {
+  		int ntp;
+  		cin >> ntp >> tim[i];
+  		while (1) {
+  			int tp;
+  			cin >> tp;
+  			if (tp == 0) {
+  				break;
+  			}
+  			G[tp].push_back(i);
+  			ind[i]++;
+  			
+  		}
+  	}
+  
+  
+  	queue<int> q;
+  	
+  	for (int i = 1; i <= n; i++) {
+  		if (ind[i] == 0) {
+  			q.push(i);
+  			dp[i] = tim[i];
+  		}
+  	}
+  	
+  
+  	while (!q.empty()) {
+  		int u = q.front();
+  		q.pop();
+  		
+  		//cout << u << " ";
+  
+  		for (int i = 0; i < G[u].size(); i++) {
+  			int v = G[u][i];
+  			dp[v] = max(dp[v], dp[u] + tim[v]);
+  			ind[v]--;
+  			if (ind[v] == 0) {
+  				q.push(v);
+  			}
+  		}
+  
+  		
+  	}
+  	int mx = 0;
+  	for (int i = 1; i <= n; i++) {
+  		mx = max(mx, dp[i]);
+  	}
+  	cout << mx << endl;
+  }
+  ```
+
+  **拓扑 食物链 路径数**
+
+  ```c++
+  #include<iostream>
+  #include<vector>
+  #include<queue>
+  using namespace std;
+  
+  typedef long long ll;
+  
+  const ll MOD = 80112002;
+  
+  vector<vector<ll> > G;
+  vector<ll> vis;
+  vector<ll> ind;
+  vector<ll> dp;
+  ll cnt;
+  
+  
+  int main() {
+  	ios::sync_with_stdio(0);
+  	ll n, m;
+  	cin >> n >> m;
+  	G = vector<vector<ll> >(n + 1);
+  	vis = vector<ll>(n + 1);
+  	ind = vector<ll>(n + 1);
+  	dp = vector<ll>(n + 1);
+  	for (ll i = 0; i < m; i++) {
+  		ll u, v;
+  		cin >> u >> v;
+  		G[u].push_back(v);
+  		ind[v]++;
+  	}
+  	ll ans = 0;
+  	queue<ll> q;
+  
+  	for (ll i = 1; i <= n; i++) {
+  		if (ind[i] == 0) {
+  			dp[i] = 1;
+  			q.push(i);
+  		}
+  	}
+  	while (!q.empty()) {
+  		ll u = q.front();
+  		q.pop();
+  
+  		if (G[u].size() == 0) {
+  			ans += dp[u]%MOD;
+  			ans %= MOD;
+  		}
+  
+  
+  		for (ll i = 0; i < G[u].size(); i++) {
+  			
+  			ll v = G[u][i];
+  			dp[v] += dp[u]%MOD;
+  			dp[v] %= MOD;
+  			ind[v]--;
+  			if (ind[v] == 0) {
+  				q.push(v);
+  			}
+  		}
+  	}
+  
+  
+  	cout << ans << endl;
+  }
+  ```
+
+  **拓扑排序 入度**
+
+  *拓扑排序的作用主要是计算依赖*
+  如一项大的工程常被分为多个小的子工程,子工程之间可能存在一定的先后顺序，即某些子工程必须在其他的一些子工程完成后才能开始
+
+  ```c++
+  #include<iostream>
+  
+  #include<vector>
+  
+  #include<queue>
+  
+  using namespace std;
+  
+  int main() {
+  
+  	int n,m;
+  
+  	cin >> n  >> m;
+  	vector<vector<int> > G(n + 1);
+  	vector<int> indegree(n + 1,0);
+  	vector<int> ans;
+  
+  	for (int i = 0; i < m; i++) {
+  		int u, v;
+  		cin >> u >> v;
+  		G[u].push_back(v);
+  		indegree[v]++;
+  	}
+  
+  	queue<int> q; //入度为0的点
+  
+  	for (int i = 1; i <= n; i++) {
+  		if (indegree[i] == 0) {
+  			q.push(i);
+  			
+  		}
+  	}
+  
+  	while (!q.empty()) {
+  		int now = q.front();
+  		q.pop();
+  		ans.push_back(now);
+  		for (int i = 0; i < G[now].size(); i++) {
+  
+  			int u = G[now][i];
+  			indegree[u]--;
+  			if (indegree[u] == 0) {
+  				q.push(u);	
+  			}
+  		}
+  	}
+  
+  	for (int i = 0; i < ans.size(); i++) {
+  		cout << ans[i] << " ";
+  	}
+  
+  }
+  ```
+
+  
+
+**AOE网**（有权边）
+
+* 只有在某顶点所代表的事件发生后，从该顶点出发的各活动才能开始；
+* 只有在进入某顶点的各活动都结束，该顶点所代表的事件才能发生
+* 工程问题
+
+
+
+**最近公共祖先节点**
+
+<img src="D:\typora\pic\AIK\image-20220103101433956.png" alt="image-20220103101433956" style="zoom: 67%;" />
+
+# END
